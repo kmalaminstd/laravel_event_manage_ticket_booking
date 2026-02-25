@@ -10,7 +10,11 @@ class Category extends Model
     protected $guarded = [];
 
     public function posts(){
-        $this->hasMany(Event::class);
+        return $this->hasMany(Event::class);
+    }
+
+    public static function activeCategory(){
+        return self::where('status', true)->latest()->get();
     }
     
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Event extends Model
 {
@@ -10,23 +11,31 @@ class Event extends Model
     protected $guarded = [];
 
     public function category(){
-        $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class);
     }
 
     public function media(){
-        $this->hasMany(Media::class);
+        return $this->belongsTo(Media::class);
     }
 
-    public function tickets(){
-        $this->hasMany(Ticket::class);
+    public function ticket(){
+        return $this->hasMany(Ticket::class);
     }
 
     public function user(){
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function order(){
-        $this->hasMany(Event::class);
+        return $this->hasMany(Order::class);
+    }
+
+    public function faq(){
+        return $this->hasMany(FAQ::class);
+    }
+
+    public function schedule(){
+        return $this->hasMany(Schedule::class);
     }
 
 }

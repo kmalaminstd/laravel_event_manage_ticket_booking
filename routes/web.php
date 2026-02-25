@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrganizerController;
 use Illuminate\Support\Facades\Route;
@@ -70,15 +71,7 @@ Route::middleware(['auth', 'role:admin,organizer'])->prefix('organizer')->group(
         return view('organizer.attendees');
     });
 
-    Route::get('/create-event', [OrganizerController::class, 'createEvent']);
 
-    Route::get('/edit-event', function(){
-        return view('organizer.edit-event');
-    });
-
-    Route::get('/my-events', function(){
-        return view('organizer.my-events');
-    });
 
     Route::get('/orders', function(){
         return view('organizer.orders');
@@ -94,6 +87,18 @@ Route::middleware(['auth', 'role:admin,organizer'])->prefix('organizer')->group(
 
     Route::get('/settings', function(){
         return view('organizer.settings');
+    });
+
+    Route::controller(OrganizerController::class)->group(function(){
+        Route::get('/create-event', 'createEvent');
+        Route::get('/event/{event}/edit', 'editEvent');
+        Route::get('/my-events', 'myEvents');
+    });
+
+    Route::controller(EventController::class)->group(function(){
+        Route::post('/event/create', 'store');
+        Route::patch('/event/{event}/update', 'update');
+        Route::delete('/event/{event}/delete', 'destroy');
     });
 
 

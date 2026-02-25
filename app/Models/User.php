@@ -34,19 +34,19 @@ class User extends Authenticatable
     }
 
     public function event(){
-        $this->hasMany(Event::class);
+        return $this->hasMany(Event::class);
     }
 
     public function media(){
-        $this->belongsTo(Media::class);
+        return $this->belongsTo(Media::class);
     }
 
     public function order(){
-        $this->hasMany(Order::class);
+        return $this->hasMany(Order::class);
     }
 
     public function ticket(){
-        $this->hasMany(Ticket::class);
+        return $this->hasMany(Ticket::class);
     }
 
     /**

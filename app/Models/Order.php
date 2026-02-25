@@ -8,15 +8,15 @@ class Order extends Model
 {
     
     public function event(){
-        $this->belongsTo(Event::class);
+        return $this->belongsTo(Event::class);
     }
 
     public function user(){
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function ticket(){
-        $this->belongsTo(Ticket::class);
+        return $this->belongsTo(Ticket::class);
     }
 
 }

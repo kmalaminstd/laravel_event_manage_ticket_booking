@@ -22,9 +22,11 @@ return new class extends Migration
             $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete();
             $table->date('start_date');
             $table->date('end_date');
-            $table->enum('type',['online', 'physical']);
-            $table->string('address');
-            $table->string(Media::class);
+            $table->enum('event_type',['online', 'physical']);
+            $table->string('address')->nullable();
+            $table->foreignIdFor(Media::class);
+            $table->boolean("admin_approved")->default(false);
+            $table->string('venue')->nullable();
             $table->boolean('published');
             $table->timestamps();
         });

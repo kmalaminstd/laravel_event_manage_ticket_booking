@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Media extends Model
 {
     
-    public function post(){
-        $this->belongsTo(Event::class);
+    protected $guarded = [];
+
+    public function event(){
+        return $this->hasOne(Event::class, 'media_id');
     }
 
     public function user(){
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
 }

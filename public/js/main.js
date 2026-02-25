@@ -142,24 +142,83 @@ document.addEventListener('DOMContentLoaded', function () {
           <div class="row g-3">
             <div class="col-md-3">
               <label class="form-label">Tier Name</label>
-              <input type="text" class="form-control" placeholder="e.g. VIP">
+              <input type="text" name="ticket[${tierCount}][name]" class="form-control" placeholder="e.g. VIP">
             </div>
             <div class="col-md-2">
               <label class="form-label">Price ($)</label>
-              <input type="number" class="form-control" placeholder="0.00">
+              <input type="number" name="ticket[${tierCount}][price]" class="form-control" placeholder="0.00">
             </div>
             <div class="col-md-2">
               <label class="form-label">Quantity</label>
-              <input type="number" class="form-control" placeholder="100">
+              <input type="number" name="ticket[${tierCount}][quantity]" class="form-control" placeholder="100">
             </div>
             <div class="col-md-5">
               <label class="form-label">Description</label>
-              <input type="text" class="form-control" placeholder="What's included">
+              <input type="text" name="ticket[${tierCount}][description]" class="form-control" placeholder="What's included">
             </div>
           </div>
         </div>`;
       tierContainer.insertAdjacentHTML('beforeend', tierHTML);
     });
+  }
+
+  // -- dynamic schedule tier
+  const addScheduleTierBtn = document.querySelector('#addScheduleTierBtn')
+  const scheduleTierContainer = document.querySelector('#scheduleTierContainer')
+  let scheduleTierCount = document.querySelectorAll('.event-schedule-tier-row').length
+
+  if(addScheduleTierBtn && scheduleTierContainer){
+    addScheduleTierBtn.addEventListener('click', ()=> {
+      scheduleTierCount++
+      const tierHtml = `
+        <div class="event-schedule-tier-row" id="tier-${scheduleTierCount}">
+          <button type="button" class="remove-tier" onclick="this.closest('.event-schedule-tier-row').remove()"><i class="bi bi-x"></i></button>
+                            <div class="row g-3">
+                                <div class="col-md-3">
+                                    <label class="form-label">Title</label>
+                                    <input name="schedule[${scheduleTierCount}][title]" type="text" class="form-control" placeholder="e.g. Gates Open">
+                                    </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Time</label>
+                                    <input type="time" name="schedule[${scheduleTierCount}][time]" class="form-control">
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label class="form-label">Description</label>
+                                    <input type="text" name="schedule[${scheduleTierCount}][description]" class="form-control" placeholder="e.g. Welcome drinks & registration">
+                                </div>
+                            </div>
+          </div>
+      `
+      scheduleTierContainer.insertAdjacentHTML('beforeend', tierHtml)
+    })
+  }
+
+  // -- dynamic FAQ tier
+  const faqTierBtn = document.querySelector('#addFAQTierBtn')
+  const faqTierContainer = document.querySelector('#faqTierContainer')
+  let faqTierCount = document.querySelectorAll('.faq-tier-row').length
+
+  if(faqTierBtn && faqTierContainer){
+    faqTierBtn.addEventListener('click', ()=> {
+      faqTierCount++
+      const tierHtml = `
+        <div class="faq-tier-row" id="tier-${faqTierCount}">
+                            <button type="button" class="remove-tier" onclick="this.closest('.faq-tier-row').remove()"><i class="bi bi-x"></i></button>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label class="form-label">Question:</label>
+                                    <input name="faq[${faqTierCount}][question]" type="text" class="form-control">
+                                    </div>
+                                <div class="col-12">
+                                    <label class="form-label">Answer</label>
+                                    <input type="text" name="faq[${faqTierCount}][answer]" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+      `
+      faqTierContainer.insertAdjacentHTML('beforeend', tierHtml)
+    })
   }
 
   // --- Tabs active state ---
@@ -176,6 +235,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
+
 
   // --- Initialize Charts (if Chart.js is loaded) ---
   if (typeof Chart !== 'undefined') {
@@ -447,6 +507,19 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelector('#role_input').value = e.target.value
       })
     })
+  }
+
+  if(document.querySelector('#create_new_event_form')){
+
+    const buttons = document.querySelectorAll('.nev_event_type_btn')
+    const inputElm = document.querySelector('.nev_event_type')
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', e => {
+        inputElm.value = e.target.value
+      })
+    })
+
   }
 
 });

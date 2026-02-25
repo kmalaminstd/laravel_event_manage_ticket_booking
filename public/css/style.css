@@ -1685,7 +1685,7 @@ img {
 }
 
 /* --- Dynamic Ticket Tier --- */
-.ticket-tier-row {
+.ticket-tier-row, .event-schedule-tier-row, .faq-tier-row {
   background: var(--light-bg);
   border-radius: var(--radius-sm);
   padding: 1.25rem;
@@ -1694,7 +1694,7 @@ img {
   position: relative;
 }
 
-.ticket-tier-row .remove-tier {
+.ticket-tier-row .remove-tier, .event-schedule-tier-row .remove-tier, .faq-tier-row .remove-tier {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;

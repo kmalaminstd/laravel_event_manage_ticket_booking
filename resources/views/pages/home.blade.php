@@ -38,67 +38,29 @@
     <!-- ===== CATEGORIES ===== -->
     <section class="section-padding">
         <div class="container">
-        <div class="section-header">
-            <span class="section-badge">Categories</span>
-            <h2>Browse by Category</h2>
-            <p>Find events that match your interests from our diverse range of categories</p>
-        </div>
-        <div class="row g-4">
-            <div class="col-6 col-md-4 col-lg-2">
-            <div class="category-card">
-                <div class="icon-wrap" style="background: rgba(232,168,56,0.12); color: #e8a838;">
-                <i class="bi bi-music-note-beamed"></i>
-                </div>
-                <h5>Concerts</h5>
-                <p>120 Events</p>
+
+            <div class="section-header">
+                <span class="section-badge">Categories</span>
+                <h2>Browse by Category</h2>
+                <p>Find events that match your interests from our diverse range of categories</p>
             </div>
+
+            <div class="row g-4">
+
+                @foreach ($categories as $category)
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="category-card">
+                            <div class="icon-wrap" style="background: rgba(232,168,56,0.12); color: #265367;">
+                            <i class="{{ $category->icon_class }}"></i>
+                            </div>
+                            <h5>{{ $category->name }}</h5>
+                            <p>120 Events</p>
+                        </div>
+                    </div>
+                @endforeach
+
             </div>
-            <div class="col-6 col-md-4 col-lg-2">
-            <div class="category-card">
-                <div class="icon-wrap" style="background: rgba(38,83,103,0.12); color: #265367;">
-                <i class="bi bi-tools"></i>
-                </div>
-                <h5>Workshops</h5>
-                <p>85 Events</p>
-            </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-2">
-            <div class="category-card">
-                <div class="icon-wrap" style="background: rgba(40,167,69,0.12); color: #28a745;">
-                <i class="bi bi-megaphone"></i>
-                </div>
-                <h5>Seminars</h5>
-                <p>65 Events</p>
-            </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-2">
-            <div class="category-card">
-                <div class="icon-wrap" style="background: rgba(112,97,39,0.12); color: #706127;">
-                <i class="bi bi-building"></i>
-                </div>
-                <h5>Conferences</h5>
-                <p>42 Events</p>
-            </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-2">
-            <div class="category-card">
-                <div class="icon-wrap" style="background: rgba(220,53,69,0.12); color: #dc3545;">
-                <i class="bi bi-balloon"></i>
-                </div>
-                <h5>Festivals</h5>
-                <p>38 Events</p>
-            </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-2">
-            <div class="category-card">
-                <div class="icon-wrap" style="background: rgba(23,162,184,0.12); color: #17a2b8;">
-                <i class="bi bi-gift"></i>
-                </div>
-                <h5>Free Events</h5>
-                <p>95 Events</p>
-            </div>
-            </div>
-        </div>
+
         </div>
     </section>
 

@@ -35,26 +35,12 @@
 
     <!-- EVENT CARDS GRID -->
     <div class="row g-4">
-        <div class="col-md-6 col-xl-4">
-            <div class="org-event-card">
-                <div class="card-banner"><img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600"
-                        alt="Event"></div>
-                <div class="card-content">
-                    <span class="status-badge active event-status">Active</span>
-                    <h5>Summer Music Festival 2026</h5>
-                    <div class="event-stats">
-                        <span><i class="bi bi-ticket-perforated"></i> 320 sold</span>
-                        <span><i class="bi bi-currency-dollar"></i> $15,680</span>
-                    </div>
-                    <div class="d-flex gap-2 mt-3">
-                        <a href="organizer-edit-event.html" class="btn btn-sm btn-outline-primary-custom flex-fill"><i
-                                class="bi bi-pencil me-1"></i> Edit</a>
-                        <a href="organizer-attendees.html" class="btn btn-sm btn-primary-custom flex-fill"><i
-                                class="bi bi-people me-1"></i> Attendees</a>
-                    </div>
-                </div>
+        @foreach ($events as $event)
+            <div class="col-md-6 col-xl-4">
+                <x-cards.organizer-event-card :event="$event" />
             </div>
-        </div>
+        @endforeach
+
         <div class="col-md-6 col-xl-4">
             <div class="org-event-card">
                 <div class="card-banner"><img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600"
@@ -116,8 +102,7 @@
         </div>
         <div class="col-md-6 col-xl-4">
             <div class="org-event-card">
-                <div class="card-banner"><img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=600"
-                        alt="Event"></div>
+                <div class="card-banner"><img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=600" alt="Event"></div>
                 <div class="card-content">
                     <span class="status-badge active event-status">Active</span>
                     <h5>International Food & Culture Fest</h5>
@@ -126,10 +111,8 @@
                         <span><i class="bi bi-currency-dollar"></i> $15,750</span>
                     </div>
                     <div class="d-flex gap-2 mt-3">
-                        <a href="organizer-edit-event.html" class="btn btn-sm btn-outline-primary-custom flex-fill"><i
-                                class="bi bi-pencil me-1"></i> Edit</a>
-                        <a href="organizer-attendees.html" class="btn btn-sm btn-primary-custom flex-fill"><i
-                                class="bi bi-people me-1"></i> Attendees</a>
+                        <a href="organizer-edit-event.html" class="btn btn-sm btn-outline-primary-custom flex-fill"><i class="bi bi-pencil me-1"></i> Edit</a>
+                        <a href="organizer-attendees.html" class="btn btn-sm btn-primary-custom flex-fill"><i  class="bi bi-people me-1"></i> Attendees</a>
                     </div>
                 </div>
             </div>
@@ -146,8 +129,8 @@
                         <span><i class="bi bi-currency-dollar"></i> $5,400</span>
                     </div>
                     <div class="d-flex gap-2 mt-3">
-                        <a href="organizer-analytics.html" class="btn btn-sm btn-outline-primary-custom flex-fill"><i
-                                class="bi bi-bar-chart me-1"></i> Analytics</a>
+                        <a href="organizer-analytics.html" class="btn btn-sm btn-outline-primary-custom flex-fill"><i class="bi bi-bar-chart me-1"></i> Analytics </a>
+
                         <a href="organizer-attendees.html" class="btn btn-sm btn-primary-custom flex-fill"><i
                                 class="bi bi-people me-1"></i> Attendees</a>
                     </div>
