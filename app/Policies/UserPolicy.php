@@ -2,11 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Event;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class EventPolicy
+class UserPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,9 +18,9 @@ class EventPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Event $event): bool
+    public function view(User $user, User $model): bool
     {
-        return false;
+        return $user->id === $model->id || $user->isAdmin();
     }
 
     /**
@@ -35,23 +34,23 @@ class EventPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Event $event): bool
+    public function update(User $user, User $model): bool
     {
-        return $user->id === $event->user_id || $user->role === "admin";
+        return $user->id === $model->id || $user->isAdmin();
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Event $event): bool
+    public function delete(User $user, User $model): bool
     {
-        return $user->id === $event->user_id || $user->role === "admin";
+        return $user->id === $model->id || $user->isAdmin();
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Event $event): bool
+    public function restore(User $user, User $model): bool
     {
         return false;
     }
@@ -59,13 +58,8 @@ class EventPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Event $event): bool
+    public function forceDelete(User $user, User $model): bool
     {
         return false;
-    }
-
-    public function viewdraft(User $user, Event $event): bool
-    {
-        return $event->user_id === $user->id || $user->role === "admin";
     }
 }

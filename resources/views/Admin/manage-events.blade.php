@@ -32,9 +32,9 @@
                     <option>Workshop</option>
                     <option>Conference</option>
                 </select>
-                <div class="input-group" style="max-width:240px;"><span class="input-group-text bg-transparent"><i
-                            class="bi bi-search"></i></span><input type="text" class="form-control"
-                        placeholder="Search events..."></div>
+                <div class="input-group" style="max-width:240px;">
+                    <span class="input-group-text bg-transparent"><i class="bi bi-search"></i></span><input type="text" class="form-control" placeholder="Search events...">
+                </div>
             </div>
         </div>
     </div>
@@ -55,6 +55,22 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($events as $event)
+                        <tr>
+                            <td><strong>{{ $event->name }}</strong></td>
+                            <td>SoundMax Pro</td>
+                            <td>Concert</td>
+                            <td>Mar 15, 2026</td>
+                            <td>320/500</td>
+                            <td>$15,680</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    <button class="action-btn" title="View"><i class="bi bi-eye"></i></button><button class="action-btn danger"  title="Suspend"><i class="bi bi-slash-circle"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                     <tr>
                         <td><strong>Summer Music Festival</strong></td>
                         <td>SoundMax Pro</td>
@@ -64,9 +80,9 @@
                         <td>$15,680</td>
                         <td><span class="status-badge active">Active</span></td>
                         <td>
-                            <div class="d-flex gap-1"><button class="action-btn" title="View"><i
-                                        class="bi bi-eye"></i></button><button class="action-btn danger"
-                                    title="Suspend"><i class="bi bi-slash-circle"></i></button></div>
+                            <div class="d-flex gap-1">
+                                <button class="action-btn" title="View"><i class="bi bi-eye"></i></button><button class="action-btn danger"  title="Suspend"><i class="bi bi-slash-circle"></i></button>
+                            </div>
                         </td>
                     </tr>
                     <tr>

@@ -49,6 +49,18 @@ class User extends Authenticatable
         return $this->hasMany(Ticket::class);
     }
 
+    public function isAdmin(){
+        return $this->role === "admin";
+    }
+
+    public function isOrganizer(){
+        return $this->role === "organizer";
+    }
+
+    public function isUser(){
+        return $this->role === "user";
+    }
+
     /**
      * Get the attributes that should be cast.
      *

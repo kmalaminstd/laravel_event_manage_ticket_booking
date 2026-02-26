@@ -123,6 +123,12 @@ class EventController extends Controller
             "address" => ['required_if:event_type,physical', 'nullable']
         ]);
 
+        if($request->act_btn === 'publish'){
+            $basicAttributes['published'] = true;
+        }else{
+            $basicAttributes['published'] = false;
+        }
+
         $event->update($basicAttributes);
 
         // update new image

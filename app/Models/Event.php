@@ -38,4 +38,8 @@ class Event extends Model
         return $this->hasMany(Schedule::class);
     }
 
+    public static function allEvents(){
+        return self::latest();
+    }
+
 }

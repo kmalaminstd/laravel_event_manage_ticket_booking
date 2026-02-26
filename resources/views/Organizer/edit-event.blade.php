@@ -184,18 +184,20 @@
                     </div>
                 </div>
 
-                <div class="form-card">
-                    <div class="ticket-card">
-                        <h5 class="mb-3">Update Event</h5>
-                        <div class="d-flex flex-column gap-2">
+                @if (!$event->admin_approved)
+                    <div class="form-card">
+                        <div class="ticket-card">
+                            <h5 class="mb-3">Update Event</h5>
+                            <div class="d-flex flex-column gap-2">
 
-                        <button type="submit" name="act_btn" value="publish" class="btn btn-primary-custom py-2"><i class="bi bi-check-lg me-2"></i>Update & Publish</button>
+                            <button type="submit" name="act_btn" value="publish" class="btn btn-primary-custom py-2"><i class="bi bi-check-lg me-2"></i>Update & Publish</button>
 
-                        <button type="submit" name="act_btn" value="draft" class="btn btn-outline-primary-custom py-2"><i class="bi bi-save me-2"></i>Save as Draft
-                            </button>
+                            <button type="submit" name="act_btn" value="draft" class="btn btn-outline-primary-custom py-2"><i class="bi bi-save me-2"></i>Save as Draft
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
             </x-forms.form>
         </div>
             <!-- SIDEBAR -->
@@ -207,11 +209,14 @@
                     <div class="d-flex justify-content-between py-2 border-bottom"><span class="text-muted">Tickets Sold</span><strong>320</strong></div>
                     <div class="d-flex justify-content-between py-2 border-bottom"><span class="text-muted">Revenue</span><strong style="color:var(--primary);">$15,680</strong></div>
                     <div class="d-flex justify-content-between py-2"><span class="text-muted">Views</span><strong>4,520</strong></div>
-                    <x-forms.form method="POST" action="/organizer/event/{{ $event->id }}/delete">
-                            @method("DELETE")
-                            <button type="submit" class="btn btn-outline-danger py-2"><i class="bi bi-trash me-2"></i>Delete Event</button>
-                    </x-forms.form>
+                    @if(!$event->admin_approve)
+                        <x-forms.form method="POST" action="/organizer/event/{{ $event->id }}/delete">
+                                @method("DELETE")
+                                <button type="submit" class="btn btn-outline-danger py-2"><i class="bi bi-trash me-2"></i>Delete Event</button>
+                        </x-forms.form>
+                    @endif
                 </div>
+
             </div>
         </div>
     </div>

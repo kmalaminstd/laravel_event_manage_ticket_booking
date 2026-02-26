@@ -17,8 +17,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->foreignIdFor(Media::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Media::class)->nullable();
             $table->enum('role', ['organizer', 'user', 'admin'])->default('user');
+            $table->string('phone')->nullable();
+            $table->string('website')->nullable();
+            $table->text('about')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();

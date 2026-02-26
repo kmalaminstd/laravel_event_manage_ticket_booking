@@ -25,30 +25,34 @@
             <!-- ORGANIZATION TAB -->
             <div class="tab-pane fade show active" id="orgProfile">
                 <div class="form-card" style="max-width:700px;">
-                    <div class="d-flex align-items-center gap-3 mb-4 pb-4 border-bottom">
-                        <div
-                            style="width:80px;height:80px;border-radius:var(--radius-md);background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.75rem;font-weight:700;">
-                            SM</div>
-                        <div>
-                            <h5 class="mb-1">SoundMax Pro</h5>
-                            <p class="text-muted mb-0" style="font-size:0.85rem;">Verified Organizer · Since 2024</p>
-                            <button class="btn btn-sm btn-outline-primary-custom mt-2">Change Logo</button>
+                    {{-- {{ dd($user) }} --}}
+                    <x-forms.form method="POST" action="organizer" action="/organizer/org-info/{{ $user->id }}/update" enctype="multipart/form-data">
+                        @method("PATCH")
+                        <div class="d-flex align-items-center gap-3 mb-4 pb-4 border-bottom overflow-hidden">
+                            <div style="width:80px;height:80px;border-radius:var(--radius-md);background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.75rem;font-weight:700;">
+                                @if ($user->media_id && Storage::disk('public')->exists($user->media->src))
+                                    <img src="{{ asset('/storage/' . $user->media->src) }}" style="height: 100%; width: 100%; object-fit: cover;"/>
+                                @else
+                                    IMG
+                                @endif
+                            </div>
+                            <div>
+                                <h5 class="mb-1">{{ $user->name }}</h5>
+                                <p class="text-muted mb-0" style="font-size:0.85rem;">Verified Organizer · Since 2024</p>
+                                <input type="file" accept="image/*" name="media" id="media" hidden />
+                                <label class="btn btn-sm btn-outline-primary-custom mt-2" for="media">Change Logo</label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row g-3">
-                        <div class="col-md-6"><label class="form-label">Organization Name</label><input type="text"
-                                class="form-control" value="SoundMax Pro"></div>
-                        <div class="col-md-6"><label class="form-label">Contact Email</label><input type="email"
-                                class="form-control" value="contact@soundmaxpro.com"></div>
-                        <div class="col-md-6"><label class="form-label">Phone</label><input type="tel"
-                                class="form-control" value="+1 (555) 987-6543"></div>
-                        <div class="col-md-6"><label class="form-label">Website</label><input type="url"
-                                class="form-control" value="https://soundmaxpro.com"></div>
-                        <div class="col-12"><label class="form-label">About</label><textarea class="form-control"
-                                rows="3">We are a leading event production company specializing in live music, tech conferences, and cultural festivals.</textarea>
+                        <div class="row g-3">
+                            <div class="col-md-6"><label class="form-label">Organization Name</label><input type="text" class="form-control" name="name" value="{{ $user->name }}"></div>
+                            <div class="col-md-6"><label class="form-label">Contact Email</label><input type="email" class="form-control" value="{{ $user->email }}"></div>
+                            <div class="col-md-6"><label class="form-label">Phone</label><input type="tel" class="form-control" name="phone" value="{{ $user->phone }}"></div>
+                            <div class="col-md-6"><label class="form-label">Website</label><input type="url" name="website" class="form-control" value="{{ $user->website }}"></div>
+                            <div class="col-12"><label class="form-label">About</label><textarea class="form-control" name="about" rows="3">{{ $user->about }}</textarea>
+                            </div>
                         </div>
-                    </div>
-                    <button class="btn btn-primary-custom mt-4">Save Changes</button>
+                        <button type="submit" class="btn btn-primary-custom mt-4">Save Changes</button>
+                    </x-forms.form>
                 </div>
             </div>
 
