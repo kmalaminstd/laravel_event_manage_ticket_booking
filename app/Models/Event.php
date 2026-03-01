@@ -42,4 +42,8 @@ class Event extends Model
         return self::latest();
     }
 
+    protected $casts = [
+        "start_date" => "date"
+    ];
+
 }

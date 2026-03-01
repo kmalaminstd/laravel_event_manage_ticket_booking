@@ -26,6 +26,7 @@ return new class extends Migration {
             $table->date("end_date");
             $table->enum("event_type", ["online", "physical"]);
             $table->string("address")->nullable();
+            $table->string('slug');
             $table->foreignIdFor(Media::class);
             $table->boolean("admin_approved")->default(false);
             $table->boolean("suspended")->default(false);

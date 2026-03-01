@@ -19,9 +19,17 @@ class EventPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Event $event): bool
+    public function view(?User $user, Event $event): bool
     {
-        return false;
+        if($event->published){
+            return true;
+        }
+
+        if(!$user){
+            return false;
+        }
+
+        return $user->role === "admin" || ($user->role ===  "organizer" && $user->id === $event->user->id);
     }
 
     /**
@@ -67,5 +75,9 @@ class EventPolicy
     public function viewdraft(User $user, Event $event): bool
     {
         return $event->user_id === $user->id || $user->role === "admin";
+    }
+
+    public function approve(User $user){
+        return $user->isAdmin();
     }
 }

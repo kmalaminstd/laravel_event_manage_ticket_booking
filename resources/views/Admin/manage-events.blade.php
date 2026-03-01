@@ -58,88 +58,43 @@
                     @foreach ($events as $event)
                         <tr>
                             <td><strong>{{ $event->name }}</strong></td>
-                            <td>SoundMax Pro</td>
-                            <td>Concert</td>
-                            <td>Mar 15, 2026</td>
+                            <td>{{ $event->user->name }}</td>
+                            <td>{{ $event->category->name }}</td>
+                            <td>{{ $event->start_date->format('M d , Y') }}</td>
                             <td>320/500</td>
                             <td>$15,680</td>
-                            <td><span class="status-badge active">Active</span></td>
+                            <td>
+                                @if ($event->suspended)
+                                    <span class="status-badge pending">Suspend</span>
+                                @else
+                                    @if ($event->admin_approved)
+                                        <span class="status-badge active">Active</span>
+                                    @else
+                                        <span class="status-badge pending">Pending</span>
+                                    @endif
+                                @endif
+                            </td>
                             <td>
                                 <div class="d-flex gap-1">
-                                    <button class="action-btn" title="View"><i class="bi bi-eye"></i></button><button class="action-btn danger"  title="Suspend"><i class="bi bi-slash-circle"></i></button>
+                                    <a href="/event/{{ $event->id }}/{{ $event->slug }}" class="action-btn" title="View"><i class="bi bi-eye"></i></a>
+                                    @if ($event->admin_approved)                                      
+                                        <x-forms.form method="POST">
+                                            <button class="action-btn danger" title="Reject"><i class="bi bi-x-lg"></i></button>
+                                        </x-forms.form>
+                                    @else
+                                        <x-forms.form method="POST">
+                                            @method('PATCH')
+                                            <button class="action-btn success" title="Approve"><i class="bi bi-check-lg"></i></button>
+                                        </x-forms.form>
+                                    @endif
+                                     <x-forms.form method="POST">
+                                            @method('PATCH')
+                                            <button class="action-btn danger"  title="Suspend"><i class="bi bi-slash-circle"></i></button>
+                                        </x-forms.form>
                                 </div>
                             </td>
                         </tr>
                     @endforeach
-                    <tr>
-                        <td><strong>Summer Music Festival</strong></td>
-                        <td>SoundMax Pro</td>
-                        <td>Concert</td>
-                        <td>Mar 15, 2026</td>
-                        <td>320/500</td>
-                        <td>$15,680</td>
-                        <td><span class="status-badge active">Active</span></td>
-                        <td>
-                            <div class="d-flex gap-1">
-                                <button class="action-btn" title="View"><i class="bi bi-eye"></i></button><button class="action-btn danger"  title="Suspend"><i class="bi bi-slash-circle"></i></button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Tech Innovation Summit</strong></td>
-                        <td>SoundMax Pro</td>
-                        <td>Conference</td>
-                        <td>Apr 10, 2026</td>
-                        <td>580/800</td>
-                        <td>$74,820</td>
-                        <td><span class="status-badge active">Active</span></td>
-                        <td>
-                            <div class="d-flex gap-1"><button class="action-btn" title="View"><i
-                                        class="bi bi-eye"></i></button><button class="action-btn danger"
-                                    title="Suspend"><i class="bi bi-slash-circle"></i></button></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>AI & Future of Work Forum</strong></td>
-                        <td>SoundMax Pro</td>
-                        <td>Seminar</td>
-                        <td>May 05, 2026</td>
-                        <td>0/300</td>
-                        <td>$0</td>
-                        <td><span class="status-badge pending">Pending</span></td>
-                        <td>
-                            <div class="d-flex gap-1"><button class="action-btn success" title="Approve"><i
-                                        class="bi bi-check-lg"></i></button><button class="action-btn danger"
-                                    title="Reject"><i class="bi bi-x-lg"></i></button></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Yoga & Wellness Retreat</strong></td>
-                        <td>HealthFirst Inc</td>
-                        <td>Workshop</td>
-                        <td>Apr 20, 2026</td>
-                        <td>0/50</td>
-                        <td>$0</td>
-                        <td><span class="status-badge pending">Pending</span></td>
-                        <td>
-                            <div class="d-flex gap-1"><button class="action-btn success" title="Approve"><i
-                                        class="bi bi-check-lg"></i></button><button class="action-btn danger"
-                                    title="Reject"><i class="bi bi-x-lg"></i></button></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Jazz Night Live</strong></td>
-                        <td>SoundMax Pro</td>
-                        <td>Concert</td>
-                        <td>Feb 22, 2026</td>
-                        <td>180/200</td>
-                        <td>$5,400</td>
-                        <td><span class="status-badge completed">Completed</span></td>
-                        <td>
-                            <div class="d-flex gap-1"><button class="action-btn" title="View"><i
-                                        class="bi bi-eye"></i></button></div>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>

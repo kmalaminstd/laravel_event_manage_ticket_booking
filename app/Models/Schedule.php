@@ -12,4 +12,8 @@ class Schedule extends Model
         return $this->belongsTo(Event::class);
     }
 
+    protected $casts = [
+        "time" => "datetime"
+    ];
+
 }

@@ -9,6 +9,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class EventController extends Controller
@@ -31,6 +32,8 @@ class EventController extends Controller
             "address" => ['required_if:event_type,physical', 'nullable'],
             "media" => ['required', 'mimes:jpeg,jpg,png,webp', 'max:2048'],
         ]);
+
+        $attributes['slug'] = Str::slug($attributes['name']);
 
         if($request->act_btn === "publish"){
             $attributes['published'] = true;
@@ -208,6 +211,10 @@ class EventController extends Controller
         $this->authorize('delete', $event);
         $event->delete();
         return redirect('/organizer/my-events');
+    }
+
+    public function approve(Event $event){
+        $this->authorize('approve', $event);
     }
 
 }

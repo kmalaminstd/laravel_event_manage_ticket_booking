@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get("/", [HomeController::class, "index"]);
 Route::get("/events", [HomeController::class, "events"]);
-Route::get("/event", [HomeController::class, "eventDetails"]);
+Route::get("/event/{event}/{slug}", [HomeController::class, "eventDetails"]);
+
 
 Route::get("/forgot-password", function () {
     return view("auth.forgot-password");
@@ -62,7 +63,8 @@ Route::middleware(["auth", "role:admin"])
             CategoryController::class,
             "destroy",
         ]);
-    });
+});
+
 
 
 Route::middleware(["auth", "role:admin,organizer"])
@@ -105,11 +107,11 @@ Route::middleware(["auth", "role:admin,organizer"])
             Route::patch("/event/{event}/update", "update");
             Route::delete("/event/{event}/delete", "destroy");
         });
-    });
+});
 
 
 
-    Route::middleware(["auth", "role:admin,user"])
+Route::middleware(["auth", "role:admin,user"])
     ->prefix("user")
     ->group(function () {
         Route::get("/", function () {
@@ -131,6 +133,6 @@ Route::middleware(["auth", "role:admin,organizer"])
         Route::get("/ticket", function () {
             return view("user.ticket");
         });
-    });
+});
 
 @include "auth.php";
