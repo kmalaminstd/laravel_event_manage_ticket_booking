@@ -1,9 +1,9 @@
-# 🎟️ Event Ticket Booking & Management System
+#  Event Ticket Booking & Management System
 
 A modern web-based event ticket booking and management platform designed to manage events, schedules, ticket sales, and users efficiently.
 
-> ⚠️ **Project Status:** Ongoing Development  
-> 🚧 Features are actively being developed and improved.
+>  **Project Status:** Ongoing Development  
+>  Features are actively being developed and improved.
 
 ---
 
@@ -16,7 +16,7 @@ https://kmalaminstd.github.io/event_ticket_booking_design/
 
 ---
 
-## 🚀 Features
+##  Features
 
 ### 🔐 Authentication & Authorization
 - User Registration & Login
