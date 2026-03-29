@@ -23,13 +23,16 @@ class EventPolicy
     {
         if($event->published){
             return true;
+        }else{
+
+            if(!$user){
+                return false;
+            }
+    
+            return $user->role === "admin" || ($user->role ===  "organizer" && $user->id === $event->user->id);
+            
         }
 
-        if(!$user){
-            return false;
-        }
-
-        return $user->role === "admin" || ($user->role ===  "organizer" && $user->id === $event->user->id);
     }
 
     /**
@@ -78,6 +81,10 @@ class EventPolicy
     }
 
     public function approve(User $user){
+        return $user->isAdmin();
+    }
+
+    public function suspend(User $user){
         return $user->isAdmin();
     }
 }

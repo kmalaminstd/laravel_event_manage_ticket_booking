@@ -61,6 +61,10 @@ class User extends Authenticatable
         return $this->role === "user";
     }
 
+    public function savePosts(){
+        return $this->hasMany(SavePost::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *

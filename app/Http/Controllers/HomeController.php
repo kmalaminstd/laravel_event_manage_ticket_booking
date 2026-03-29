@@ -19,11 +19,12 @@ class HomeController extends Controller
     }
 
     public function events(){
-        return view('pages.events');
+        $events = Event::where("admin_approved", true)->with(['category', 'media'])->paginate(20);
+        return view('pages.events', compact('events'));
     }
 
     public function eventDetails(Event $event){
-        
+        $this->authorize('view', $event);
         $schedules = $event->schedule()->get();
         $faqs = $event->faq()->get();
         $tickets = $event->ticket()->get();

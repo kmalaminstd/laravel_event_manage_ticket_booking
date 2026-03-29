@@ -63,6 +63,11 @@ Route::middleware(["auth", "role:admin"])
             CategoryController::class,
             "destroy",
         ]);
+
+        Route::patch('/event/{event}/approve', [EventController::class, "approve"]);
+        Route::patch('/event/{event}/suspend', [EventController::class, "suspend"]);
+
+
 });
 
 

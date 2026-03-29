@@ -78,16 +78,17 @@
                                 <div class="d-flex gap-1">
                                     <a href="/event/{{ $event->id }}/{{ $event->slug }}" class="action-btn" title="View"><i class="bi bi-eye"></i></a>
                                     @if ($event->admin_approved)                                      
-                                        <x-forms.form method="POST">
+                                        <x-forms.form method="POST" action="/admin/event/{{ $event->id }}/approve">
+                                            @method("PATCH")
                                             <button class="action-btn danger" title="Reject"><i class="bi bi-x-lg"></i></button>
                                         </x-forms.form>
                                     @else
-                                        <x-forms.form method="POST">
+                                        <x-forms.form method="POST" action="/admin/event/{{ $event->id }}/approve">
                                             @method('PATCH')
                                             <button class="action-btn success" title="Approve"><i class="bi bi-check-lg"></i></button>
                                         </x-forms.form>
                                     @endif
-                                     <x-forms.form method="POST">
+                                        <x-forms.form method="POST" action="/admin/event/{{ $event->id }}/suspend">
                                             @method('PATCH')
                                             <button class="action-btn danger"  title="Suspend"><i class="bi bi-slash-circle"></i></button>
                                         </x-forms.form>

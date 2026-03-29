@@ -42,6 +42,10 @@ class Event extends Model
         return self::latest();
     }
 
+    public function saveposts(){
+        return $this->hasMany(SavePost::class);
+    }
+
     protected $casts = [
         "start_date" => "date"
     ];

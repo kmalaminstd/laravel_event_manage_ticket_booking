@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Media;
+use App\Models\SavePost;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -215,6 +217,40 @@ class EventController extends Controller
 
     public function approve(Event $event){
         $this->authorize('approve', $event);
+        if($event->admin_approved){
+            $event->update([
+                "admin_approved" => false
+            ]);
+        }else{
+            $event->update([
+                "admin_approved"=> true,
+                "suspended" => false
+            ]);
+        }
+        return back();
+    }
+
+    public function suspend(Event $event){
+        $this->authorize('suspend', $event);
+        if($event->suspended){
+            $event->update([
+                "suspended" => false
+            ]);
+        }else{
+            $event->update([
+                "suspended" => true,
+                "admin_approved" => false
+            ]);
+        }
+        return back();
+    }
+
+    
+
+    public function toggleSave(Event $event){
+        $user = Auth::user();
+
+        $user->event()->create();
     }
 
 }
