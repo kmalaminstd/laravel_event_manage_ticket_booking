@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Event;
+use App\Models\SavePost;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -25,10 +26,19 @@ class HomeController extends Controller
 
     public function eventDetails(Event $event){
         $this->authorize('view', $event);
+
+        $isSaveEvent = "";
+        if(Auth::user()){
+            $user = Auth::user();
+    
+            $isSaveEvent = SavePost::where("user_id", $user->id)->where("event_id", $event->id)->first();
+        }
+
+
         $schedules = $event->schedule()->get();
         $faqs = $event->faq()->get();
         $tickets = $event->ticket()->get();
-        return view('pages.event-details', compact('event', 'schedules', 'faqs', 'tickets'));
+        return view('pages.event-details', compact('event', 'schedules', 'faqs', 'tickets', 'isSaveEvent'));
     }
 
 }

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class SavePost extends Model
 {
 
+    protected $guarded = [];
+
     public function event(){
         $this->belongsToMany(Event::class);
     }

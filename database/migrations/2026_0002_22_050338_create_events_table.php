@@ -30,6 +30,7 @@ return new class extends Migration {
             $table->foreignIdFor(Media::class);
             $table->boolean("admin_approved")->default(false);
             $table->boolean("suspended")->default(false);
+            $table->boolean("featured")->default(false);
             $table->string("venue")->nullable();
             $table->boolean("published");
             $table->timestamps();
