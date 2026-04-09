@@ -92,6 +92,16 @@
                                             @method('PATCH')
                                             <button class="action-btn danger"  title="Suspend"><i class="bi bi-slash-circle"></i></button>
                                         </x-forms.form>
+                                        <x-forms.form action="/admin/event/{{ $event->id }}/set-feature" method="POST">
+                                            @method("PATCH")
+                                            <button class="action-btn danger"  title="Feature">
+                                                @if ($event->featured)
+                                                    <i class="bi bi-star-fill"></i>
+                                                @else
+                                                    <i class="bi bi-star"></i>
+                                                @endif
+                                            </button>
+                                        </x-forms.form>
                                 </div>
                             </td>
                         </tr>

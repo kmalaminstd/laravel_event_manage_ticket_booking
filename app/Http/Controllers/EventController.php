@@ -245,6 +245,17 @@ class EventController extends Controller
         return back();
     }
 
+    public function featureToggle(Event $event){
+        $this->authorize('feature', $event);
+        if($event->featured){
+            $event->update(["featured" => false]);
+        }else{
+            $event->update(["featured" =>  true]);
+        }
+
+        return back();
+    }
+
     
 
     public function toggleSave(Event $event){

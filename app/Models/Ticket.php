@@ -21,4 +21,6 @@ class Ticket extends Model
         return $this->belongsTo(Order::class);
     }
 
+
+
 }

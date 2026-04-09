@@ -67,6 +67,10 @@ class EventPolicy
         return false;
     }
 
+    public function feature(User $user, Event $event) : bool{
+        return $user->role === "admin";
+    }
+
     /**
      * Determine whether the user can permanently delete the model.
      */

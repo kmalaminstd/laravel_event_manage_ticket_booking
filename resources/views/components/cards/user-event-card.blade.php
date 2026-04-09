@@ -1,13 +1,21 @@
 @props(["event"])
 
 @php
-    
+     
 // dd($event->media->src)
 @endphp
 
 <div class="event-card">
     <div class="card-img-wrap">
-        <img src="{{ asset("storage/" . $event->media->src) }}" alt="Event"><span class="badge-price">$49</span>
+        <img src="{{ asset("storage/" . $event->media->src) }}" alt="Event"><span class="badge-price">From ${{ $event->ticket_min_price }} 
+
+            @if ($event->ticket_max_price > $event->ticket_min_price)
+                {{ "to - $" . $event->ticket_max_price }}
+            @endif
+        </span>
+        @if ($event->featured)
+            <span class="badge-featured">⭐ Featured</span>
+        @endif
     </div>
     <div class="card-body">
         <div class="event-category">{{ $event->category->name }}</div>

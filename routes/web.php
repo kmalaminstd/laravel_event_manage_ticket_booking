@@ -68,6 +68,10 @@ Route::middleware(["auth", "role:admin"])
         Route::patch('/event/{event}/approve', [EventController::class, "approve"]);
         Route::patch('/event/{event}/suspend', [EventController::class, "suspend"]);
 
+        Route::controller(EventController::class)->group(function(){
+            Route::patch('/event/{event}/set-feature', 'featureToggle');
+        });
+
 
 });
 

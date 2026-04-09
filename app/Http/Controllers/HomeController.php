@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Event;
 use App\Models\SavePost;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -15,8 +16,19 @@ class HomeController extends Controller
     use AuthorizesRequests;
 
     public function index(){
+        $nextWeekStart = now()->addWeek()->startOfWeek()->toDateString();
+        $nextWeekEnd = now()->addWeek()->endOfWeek()->toDateString();
+
+        // dd($nextWeekEnd);
+
         $categories = Category::activeCategory();
-        return view('pages.home', compact('categories'));
+
+        $featuredEvents = Event::where("admin_approved", true)->where("published", true)->where("featured", true)->withMin('ticket', 'price')->withMax('ticket', 'price')->latest()->take(6)->get();
+
+        $nextWeekEvents = Event::where("admin_approved", true)->where("published", true)->whereBetween('start_date' ,[$nextWeekStart, $nextWeekEnd])->withMin('ticket', 'price')->orderBy('start_date')->get();
+        
+
+        return view('pages.home', compact(['categories', 'featuredEvents', 'nextWeekEvents']));
     }
 
     public function events(){
