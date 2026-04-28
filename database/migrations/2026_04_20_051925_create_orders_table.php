@@ -15,16 +15,16 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('order-id')->unique();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Event::class)->constrained()->cascadeOnDelete();
-            $table->integer('qty');
-            $table->integer('amount');
-            $table->string('ticket-code')->unique();
-            $table->enum('status',['paid','pending','refunded']);
+            $table->text('stripe_id');
+            $table->decimal('amount', 10, 2);
+            $table->string('currency');
+            $table->enum('status',['paid','pending','refunded'])->default('pending');
+            $table->json('tickets');
             $table->timestamps();
-        });
-    }
+            });
+        }
 
     /**
      * Reverse the migrations.

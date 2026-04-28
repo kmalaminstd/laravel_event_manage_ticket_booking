@@ -5,8 +5,10 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrganizerController;
+use App\Http\Controllers\TicketCheckOutController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Cashier\Http\Controllers\WebhookController;
 
 Route::get("/", [HomeController::class, "index"]);
 Route::get("/events", [HomeController::class, "events"]);
@@ -149,6 +151,16 @@ Route::middleware(["auth", "role:admin,user"])
         Route::controller(UserController::class)->group(function(){
             Route::post("/{event}/save-event", "saveEvent");
         });
+    
+        Route::controller(TicketCheckOutController::class)->group(function(){
+            Route::post('/checkout/{event}', 'checkout');
+            Route::get('/checkout/failed', 'checkOutFailed')->name('checkout-cancel');
+            Route::get('/checkout/confirm', 'checkOutSuccess')->name('checkout-success');            
+        });
+
+
+
+
 });
 
 @include "auth.php";

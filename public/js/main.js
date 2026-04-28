@@ -39,16 +39,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (minusBtn && plusBtn && display) {
       minusBtn.addEventListener('click', () => {
-        let val = parseInt(display.textContent);
+        let val = parseInt(display.value);
         if (val > 0) {
-          display.textContent = val - 1;
+          display.value = val - 1;
           updateTotal();
         }
       });
 
       plusBtn.addEventListener('click', () => {
-        let val = parseInt(display.textContent);
-        display.textContent = val + 1;
+        let val = parseInt(display.value);
+        display.value = val + 1;
         updateTotal();
       });
     }
@@ -60,7 +60,8 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.ticket-tier').forEach(tier => {
       const price = parseFloat(tier.dataset.price) || 0;
       const qtyEl = tier.querySelector('.qty-value');
-      const qty = qtyEl ? parseInt(qtyEl.textContent) : 0;
+      console.log(qtyEl)
+      const qty = qtyEl ? parseInt(qtyEl.value) : 0;
       total += price * qty;
     });
     const totalEl = document.querySelector('.total-price');
