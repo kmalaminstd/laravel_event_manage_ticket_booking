@@ -5,7 +5,9 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrganizerController;
+use App\Http\Controllers\StripeWebhookController;
 use App\Http\Controllers\TicketCheckOutController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Cashier\Http\Controllers\WebhookController;
@@ -140,13 +142,12 @@ Route::middleware(["auth", "role:admin,user"])
             return view("user.settings");
         });
 
-        Route::get("/tickets", function () {
-            return view("user.tickets");
+        Route::controller(TicketController::class)->group(function(){
+            Route::get('/tickets', 'userTickets');
+            Route::get('/ticket/{order}', 'userTicketDetails');
+            Route::get('/ticket/{ticket}/{order}/download', 'userTicketDownload');
         });
 
-        Route::get("/ticket", function () {
-            return view("user.ticket");
-        });
 
         Route::controller(UserController::class)->group(function(){
             Route::post("/{event}/save-event", "saveEvent");
@@ -158,7 +159,7 @@ Route::middleware(["auth", "role:admin,user"])
             Route::get('/checkout/confirm', 'checkOutSuccess')->name('checkout-success');            
         });
 
-
+        Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleCheckoutSessionCompleted']);
 
 
 });

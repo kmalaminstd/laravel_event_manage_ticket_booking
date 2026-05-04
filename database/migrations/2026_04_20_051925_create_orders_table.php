@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Event;
+use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -21,7 +22,9 @@ return new class extends Migration
             $table->decimal('amount', 10, 2);
             $table->string('currency');
             $table->enum('status',['paid','pending','refunded'])->default('pending');
-            $table->json('tickets');
+            $table->foreignIdFor(Ticket::class)->constrained()->cascadeOnDelete();
+            $table->string('order_code', 15);
+            $table->string('quantity');
             $table->timestamps();
             });
         }

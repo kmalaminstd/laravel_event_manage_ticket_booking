@@ -49,129 +49,34 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center gap-2">
-                                <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=100"
-                                    style="width:40px;height:40px;border-radius:var(--radius-sm);object-fit:cover;"
-                                    alt="">
-                                <div><strong style="font-size:0.9rem;">Summer Music Festival</strong>
-                                    <div class="text-muted" style="font-size:0.75rem;">Central Park, NYC</div>
+
+                    @forelse ($orders as $order)
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <img src="{{ asset('/storage/'. $order->event->media->src) }}" style="width:40px;height:40px;border-radius:var(--radius-sm);object-fit:cover;" alt="">
+                                    <div><strong style="font-size:0.9rem;">{{ $order->event->name }}</strong>
+                                        <div class="text-muted" style="font-size:0.75rem;">{{ $order->event->address }}</div>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td>Mar 15, 2026</td>
-                        <td><span class="section-badge mb-0" style="font-size:0.7rem;">General</span></td>
-                        <td><span class="status-badge active">Active</span></td>
-                        <td><button class="action-btn" title="View QR"><i class="bi bi-qr-code"></i></button></td>
-                        <td>
-                            <div class="d-flex gap-1">
-                                <a href="user-ticket-details.html" class="action-btn" title="View"><i
-                                        class="bi bi-eye"></i></a>
-                                <button class="action-btn" title="Download"><i class="bi bi-download"></i></button>
-                                <button class="action-btn danger" title="Request Refund"><i
-                                        class="bi bi-arrow-counterclockwise"></i></button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center gap-2">
-                                <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=100"
-                                    style="width:40px;height:40px;border-radius:var(--radius-sm);object-fit:cover;"
-                                    alt="">
-                                <div><strong style="font-size:0.9rem;">Tech Innovation Summit</strong>
-                                    <div class="text-muted" style="font-size:0.75rem;">Convention Center, SF</div>
+                            </td>
+                            <td>{{ $order->event->start_date->format('d M, Y') }}</td>
+                            <td><span class="section-badge mb-0" style="font-size:0.7rem;">{{ $order->ticket->name }}</span></td>
+                            <td><span class="status-badge active">{{ $order->status }}</span></td>
+                            <td><button class="action-btn" title="View QR"><i class="bi bi-qr-code"></i></button></td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    <a href="/user/ticket/{{ $order->id }}" class="action-btn" title="View"><i class="bi bi-eye"></i></a>
+                                    <button class="action-btn" title="Download"><i class="bi bi-download"></i></button>
+                                    <button class="action-btn danger" title="Request Refund"><i class="bi bi-arrow-counterclockwise"></i></button>
                                 </div>
-                            </div>
-                        </td>
-                        <td>Apr 10, 2026</td>
-                        <td><span class="section-badge mb-0"
-                                style="font-size:0.7rem;background:rgba(232,168,56,0.15);color:var(--accent);">VIP</span>
-                        </td>
-                        <td><span class="status-badge active">Active</span></td>
-                        <td><button class="action-btn" title="View QR"><i class="bi bi-qr-code"></i></button></td>
-                        <td>
-                            <div class="d-flex gap-1">
-                                <a href="user-ticket-details.html" class="action-btn" title="View"><i
-                                        class="bi bi-eye"></i></a>
-                                <button class="action-btn" title="Download"><i class="bi bi-download"></i></button>
-                                <button class="action-btn danger" title="Request Refund"><i
-                                        class="bi bi-arrow-counterclockwise"></i></button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center gap-2">
-                                <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=100"
-                                    style="width:40px;height:40px;border-radius:var(--radius-sm);object-fit:cover;"
-                                    alt="">
-                                <div><strong style="font-size:0.9rem;">Design Masterclass</strong>
-                                    <div class="text-muted" style="font-size:0.75rem;">Art Studio, London</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td>Mar 22, 2026</td>
-                        <td><span class="section-badge mb-0" style="font-size:0.7rem;">Premium</span></td>
-                        <td><span class="status-badge active">Active</span></td>
-                        <td><button class="action-btn" title="View QR"><i class="bi bi-qr-code"></i></button></td>
-                        <td>
-                            <div class="d-flex gap-1">
-                                <a href="user-ticket-details.html" class="action-btn" title="View"><i
-                                        class="bi bi-eye"></i></a>
-                                <button class="action-btn" title="Download"><i class="bi bi-download"></i></button>
-                                <button class="action-btn danger" title="Request Refund"><i
-                                        class="bi bi-arrow-counterclockwise"></i></button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center gap-2">
-                                <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=100"
-                                    style="width:40px;height:40px;border-radius:var(--radius-sm);object-fit:cover;"
-                                    alt="">
-                                <div><strong style="font-size:0.9rem;">Jazz Night Live</strong>
-                                    <div class="text-muted" style="font-size:0.75rem;">Blue Note, NYC</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td>Feb 22, 2026</td>
-                        <td><span class="section-badge mb-0" style="font-size:0.7rem;">General</span></td>
-                        <td><span class="status-badge completed">Attended</span></td>
-                        <td><button class="action-btn" title="View QR"><i class="bi bi-qr-code"></i></button></td>
-                        <td>
-                            <div class="d-flex gap-1">
-                                <a href="user-ticket-details.html" class="action-btn" title="View"><i
-                                        class="bi bi-eye"></i></a>
-                                <button class="action-btn" title="Download"><i class="bi bi-download"></i></button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center gap-2">
-                                <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=100"
-                                    style="width:40px;height:40px;border-radius:var(--radius-sm);object-fit:cover;"
-                                    alt="">
-                                <div><strong style="font-size:0.9rem;">Digital Marketing 101</strong>
-                                    <div class="text-muted" style="font-size:0.75rem;">Hub, Toronto</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td>Jan 15, 2026</td>
-                        <td><span class="section-badge mb-0" style="font-size:0.7rem;">General</span></td>
-                        <td><span class="status-badge refunded">Refunded</span></td>
-                        <td><button class="action-btn" title="View QR" disabled style="opacity:0.3;"><i
-                                    class="bi bi-qr-code"></i></button></td>
-                        <td>
-                            <div class="d-flex gap-1">
-                                <a href="user-ticket-details.html" class="action-btn" title="View"><i
-                                        class="bi bi-eye"></i></a>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>                        
+                    @empty
+                        <h3>No tickets found</h3>
+                    @endforelse
+
+
                 </tbody>
             </table>
         </div>

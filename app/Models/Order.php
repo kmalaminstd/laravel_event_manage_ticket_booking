@@ -9,6 +9,10 @@ class Order extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        "tickets" => 'array'
+    ];
+
     public function event(){
         return $this->belongsTo(Event::class);
     }
@@ -20,9 +24,6 @@ class Order extends Model
     public function ticket(){
         return $this->belongsTo(Ticket::class);
     }
-
-    protected $casts = [
-        "tickets" => 'array'
-    ];
+    
 
 }
