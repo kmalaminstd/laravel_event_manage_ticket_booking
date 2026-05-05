@@ -40,12 +40,17 @@ class TicketController extends Controller
 
     public function userTicketDownload(Ticket $ticket, Order $order){
         
-        $qr = base64_encode(
-            (string) QRCode::text($order->order_code)->png()
-        );
+        ob_start();
+        QRCode::text($order->order_code)->png();
+        $qrData = ob_get_clean();
+
+        $qr = base64_encode($qrData);
+
+        // dd($qr);
 
         $pdf = Pdf::loadView('components.cards.event-ticket', compact('ticket', 'order', 'qr'));
             
+        
         return $pdf->download('ticket.pdf');
     }
 

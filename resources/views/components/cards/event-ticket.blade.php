@@ -133,7 +133,7 @@
             <!-- RIGHT -->
             <td class="right">
                 <div class="qr">
-                    <img src="data:image/png;base64,{{ $qr }}">
+                    <img src="data:image/png;base64,{{ $qr }}" width="150" height="150">
                 </div>
 
                 <div class="code">{{ $order->order_code }}</div>

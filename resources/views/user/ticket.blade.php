@@ -73,8 +73,7 @@
                 <div class="d-flex justify-content-between py-2"><span class="text-muted">Quantity</span><span> {{ $order->quantity }} </span></div>
                 
                 <hr>
-                <div class="d-flex justify-content-between py-2"><strong>Total Paid</strong><strong
-                        style="color:var(--primary);font-size:1.15rem;">$ {{ $order->ticket->price * $order->quantity }}</strong></div>
+                <div class="d-flex justify-content-between py-2"><strong>Total Paid</strong><strong style="color:var(--primary);font-size:1.15rem;">$ {{ $order->ticket->price * $order->quantity }}</strong></div>
             </div>
         </div>
 
