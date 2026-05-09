@@ -24,6 +24,7 @@ return new class extends Migration {
                 ->cascadeOnDelete();
             $table->date("start_date");
             $table->date("end_date");
+            $table->date("ticket_close");
             $table->enum("event_type", ["online", "physical"]);
             $table->string("address")->nullable();
             $table->string('slug');

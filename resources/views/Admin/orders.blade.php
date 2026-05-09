@@ -102,81 +102,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><strong>#ORD-4821</strong></td>
-                        <td>Sarah Johnson</td>
-                        <td>Summer Music Festival</td>
-                        <td>SoundMax Pro</td>
-                        <td>$98.00</td>
-                        <td>$9.80</td>
-                        <td>Feb 18</td>
-                        <td><span class="status-badge completed">Paid</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>#ORD-4820</strong></td>
-                        <td>Mike Chen</td>
-                        <td>Tech Innovation Summit</td>
-                        <td>SoundMax Pro</td>
-                        <td>$129.00</td>
-                        <td>$12.90</td>
-                        <td>Feb 17</td>
-                        <td><span class="status-badge completed">Paid</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>#ORD-4819</strong></td>
-                        <td>Emily Lee</td>
-                        <td>Design Masterclass</td>
-                        <td>SoundMax Pro</td>
-                        <td>$35.00</td>
-                        <td>$3.50</td>
-                        <td>Feb 17</td>
-                        <td><span class="status-badge pending">Pending</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>#ORD-4818</strong></td>
-                        <td>James Wilson</td>
-                        <td>Summer Music Festival</td>
-                        <td>SoundMax Pro</td>
-                        <td>$396.00</td>
-                        <td>$39.60</td>
-                        <td>Feb 16</td>
-                        <td><span class="status-badge completed">Paid</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>#ORD-4816</strong></td>
-                        <td>Tom Davis</td>
-                        <td>Jazz Night Live</td>
-                        <td>SoundMax Pro</td>
-                        <td>$30.00</td>
-                        <td>$3.00</td>
-                        <td>Feb 15</td>
-                        <td><span class="status-badge refunded">Refunded</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>#ORD-4812</strong></td>
-                        <td>Priya Singh</td>
-                        <td>Yoga & Wellness</td>
-                        <td>HealthFirst Inc</td>
-                        <td>$75.00</td>
-                        <td>$7.50</td>
-                        <td>Feb 14</td>
-                        <td><span class="status-badge completed">Paid</span></td>
-                    </tr>
+
+                    @forelse ($orders as $order)
+
+                        <tr>
+                            <td><strong>{{ $order->order_code }}</strong></td>
+                            <td>{{ $order->user->name }}</td>
+                            <td>{{ $order->event->name }}</td>
+                            <td>{{ $order->event->user->name }}</td>
+                            <td>${{ $order->amount }}</td>
+                            <td>0</td>
+                            <td>{{ $order->created_at->format('d M, Y') }}</td>
+                            <td><span class="status-badge completed">{{ $order->status }}</span></td>
+                        </tr>
+                        
+                    @empty
+                        <p>No order records</p>
+                    @endforelse
+
+                    
+
+                    
                 </tbody>
             </table>
         </div>
-        <div class="d-flex justify-content-between align-items-center mt-3">
-            <span class="text-muted" style="font-size:0.85rem;">Showing 1–6 of 8,920 orders</span>
-            <nav>
-                <ul class="pagination pagination-sm mb-0">
-                    <li class="page-item disabled"><a class="page-link" href="#">«</a></li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">»</a></li>
-                </ul>
-            </nav>
-        </div>
+        {{ $orders->links('vendor.pagination.bootstrap-5') }}
     </div>
 </div>
 

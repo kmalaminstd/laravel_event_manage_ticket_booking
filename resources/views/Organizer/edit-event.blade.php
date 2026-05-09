@@ -51,8 +51,22 @@
                 <div class="form-card mb-4">
                     <h5 class="mb-3"><i class="bi bi-calendar3 me-2" style="color:var(--accent);"></i>Date & Time</h5>
                     <div class="row g-3">
-                        <div class="col-md-6"><label class="form-label">Start Date & Time</label><input value="{{ $event->start_date }}"  type="date" class="form-control" name="start_date"></div>
-                        <div class="col-md-6"><label class="form-label">End Date & Time</label><input type="date" name="end_date" class="form-control" value="{{ $event->end_date }}"></div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Start Date & Time</label>
+                            <input  type="date" class="form-control" name="start_date" value="{{ $event->start_date->format('Y-m-d') }}">                            
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">End Date & Time</label>
+                            <input type="date" name="end_date" class="form-control" value="{{ $event->end_date }}">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Ticket Close Date</label>
+                            <input type="date" name="ticket_close" class="form-control" value="{{ $event->ticket_close->format('Y-m-d') }}">
+                        </div>
+
                     </div>
                 </div>
     
@@ -109,7 +123,7 @@
                                         </div>
                                     <div class="col-md-3">
                                         <label class="form-label">Time</label>
-                                        <input type="time" value="{{ $schedule->time }}" name="schedule[{{ $index }}][time]" class="form-control">
+                                        <input type="time" value="{{ $schedule->time->format('H:i:s') }}" name="schedule[{{ $index }}][time]" class="form-control">
                                     </div>
                                     
                                     <div class="col-md-6">

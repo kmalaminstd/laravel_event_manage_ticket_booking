@@ -29,6 +29,7 @@ class EventController extends Controller
             "category_id" => ['required', "exists:categories,id"],
             "start_date" => ['required'],
             "end_date" => ['required'],
+            "ticket_close" => ['required'],
             "event_type" => ['required', Rule::in(["online", "physical"])],
             "venue" => ['required'],
             "address" => ['required_if:event_type,physical', 'nullable'],
@@ -123,6 +124,7 @@ class EventController extends Controller
             "category_id" => ['required', "exists:categories,id"],
             "start_date" => ['required'],
             "end_date" => ['required'],
+            "ticket_close" => ['required'],
             "event_type" => ['required', Rule::in(["online", "physical"])],
             "venue" => ['required'],
             "address" => ['required_if:event_type,physical', 'nullable']

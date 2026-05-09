@@ -68,8 +68,8 @@
                     <div class="col-sm-6 col-md-3">
                         <div class="dashboard-card text-center p-3">
                             <i class="bi bi-people d-block mb-1" style="font-size:1.3rem;color:var(--primary);"></i>
-                            <strong style="font-size:0.85rem;">2,500 Seats</strong>
-                            <div style="font-size:0.75rem;color:var(--text-secondary);">180 remaining</div>
+                            <strong style="font-size:0.85rem;">{{ $event->ticket->sum('quantity') }} Seats</strong>
+                            <div style="font-size:0.75rem;color:var(--text-secondary);">{{$event->ticket->sum('quantity') - ( $event->order->sum('quantity')) }} remaining</div>
                         </div>
                     </div>
                 </div>
@@ -125,55 +125,64 @@
 
             <!-- RIGHT COLUMN — TICKET CARD -->
             <div class="col-lg-4">
-                <x-forms.form method="POST" action="/user/checkout/{{ $event->id }}">
+
+                @if ($event->ticket_close->isPast())
                     <div class="ticket-card">
-                        <h4><i class="bi bi-ticket-perforated me-2" style="color:var(--accent);"></i>Select Tickets</h4>
-
-                        <input value="{{ $event->id }}" name="event-id" name="ticket-id" hidden>
-
-                        @php
-                            $i = 0;
-                        @endphp
-                        
-                        @foreach ($tickets as $index => $ticket)
-                            <input value="{{ $ticket->id }}" name="ticket[{{ $index }}][id]" hidden>
-
-
-                            <div class="ticket-tier" data-price="{{ $ticket->price }}">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <div>
-                                        <div class="tier-name">{{ $ticket->name }}</div>
-                                        <small class="text-muted">{{ $ticket->description }}</small>
-                                    </div>
-                                    <div class="tier-price">${{ $ticket->price }}</div>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <small class="text-muted">180 remaining</small>
-                                    <div class="quantity-selector">
-                                        <button type="button" class="qty-minus"><i class="bi bi-dash"></i></button>
-                                        <input class="qty-value" value="0" name="ticket[{{ $index }}][quantity]" type="number" style="width: 50px;text-align: center; border: none; background: transparent; outline: none;">
-                                        <button type="button" class="qty-plus"><i class="bi bi-plus"></i></button>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <small class="text-muted">{{ $ticket->quantity }} Total Tickets</small>           
-                                </div>
-                            </div>
-                        @endforeach
-    
-                        <hr>
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <strong>Total</strong>
-                            <strong class="total-price" style="font-size:1.35rem;color:var(--primary);">$ 0</strong>
-                        </div>
-                        <button type="submit" class="btn btn-primary-custom w-100 py-3">
-                            <i class="bi bi-lock me-2"></i>Proceed to Checkout
-                        </button>
-                        <p class="text-center text-muted mt-2" style="font-size:0.8rem;">
-                            <i class="bi bi-shield-check me-1"></i> Secure checkout powered by Stripe
-                        </p>
+                        <h4><i class="bi bi-ticket-perforated me-2" style="color:var(--accent);"></i>Ticket of this event has closed!</h4>
+                        <p>See Our Other event. <a href="{{ url('events') }}" class="link text-primary">Click here</a>.</p>
                     </div>
-                </x-forms.form>
+                @else
+                    <x-forms.form method="POST" action="/user/checkout/{{ $event->id }}">
+                        <div class="ticket-card">
+                            <h4><i class="bi bi-ticket-perforated me-2" style="color:var(--accent);"></i>Select Tickets</h4>
+
+                            <input value="{{ $event->id }}" name="event-id" name="ticket-id" hidden>
+
+                            @php
+                                $i = 0;
+                            @endphp
+                            
+                            @foreach ($tickets as $index => $ticket)
+                                <input value="{{ $ticket->id }}" name="ticket[{{ $index }}][id]" hidden>
+
+
+                                <div class="ticket-tier" data-price="{{ $ticket->price }}">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <div class="tier-name">{{ $ticket->name }}</div>
+                                            <small class="text-muted">{{ $ticket->description }}</small>
+                                        </div>
+                                        <div class="tier-price">${{ $ticket->price }}</div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">{{ ($ticket->quantity - $ticket->order->sum('quantity')) }} remaining</small>
+                                        <div class="quantity-selector">
+                                            <button type="button" class="qty-minus"><i class="bi bi-dash"></i></button>
+                                            <input class="qty-value" value="0" name="ticket[{{ $index }}][quantity]" type="number" style="width: 50px;text-align: center; border: none; background: transparent; outline: none;">
+                                            <button type="button" class="qty-plus"><i class="bi bi-plus"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <small class="text-muted">{{ $ticket->quantity }} Total Tickets</small>           
+                                    </div>
+                                </div>
+                            @endforeach
+        
+                            <hr>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <strong>Total</strong>
+                                <strong class="total-price" style="font-size:1.35rem;color:var(--primary);">$ 0</strong>
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom w-100 py-3">
+                                <i class="bi bi-lock me-2"></i>Proceed to Checkout
+                            </button>
+                            <p class="text-center text-muted mt-2" style="font-size:0.8rem;">
+                                <i class="bi bi-shield-check me-1"></i> Secure checkout powered by Stripe
+                            </p>
+                        </div>
+                    </x-forms.form>
+                @endif
+
 
             </div>
         </div>

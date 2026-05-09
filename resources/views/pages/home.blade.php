@@ -54,7 +54,7 @@
                             <i class="{{ $category->icon_class }}"></i>
                             </div>
                             <h5>{{ $category->name }}</h5>
-                            <p>120 Events</p>
+                            <p>{{ $category->posts->count() }} Events</p>
                         </div>
                     </div>
                 @endforeach

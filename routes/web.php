@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrganizerController;
 use App\Http\Controllers\StripeWebhookController;
 use App\Http\Controllers\TicketCheckOutController;
@@ -29,10 +30,13 @@ Route::get("/checkout", function () {
 Route::middleware(["auth", "role:admin"])
     ->prefix("admin")
     ->group(function () {
-        Route::get("/", [AdminController::class, "index"]);
 
-        Route::get("/orders", function () {
-            return view("admin.orders");
+        Route::controller(AdminController::class)->group(function(){
+            Route::get("/", "index");
+        });
+
+        Route::controller(OrderController::class)->group(function(){
+            Route::get("/orders", 'showAll');
         });
 
         Route::get("/categories", [AdminController::class, "category"]);
@@ -47,8 +51,8 @@ Route::middleware(["auth", "role:admin"])
 
         Route::get("/manage-events", [AdminController::class ,"manageEvents"]);
 
-        Route::get("/manage-users", function () {
-            return view("admin.manage-users");
+        Route::controller(UserController::class)->group(function(){
+            Route::get('/manage-users', 'showAll');
         });
 
         Route::get("/reports", function () {

@@ -48,7 +48,9 @@ class Event extends Model
 
 
     protected $casts = [
-        "start_date" => "date"
+        "start_date" => "date",
+        "end_data" => "date",
+        "ticket_close" => "date"
     ];
 
 }

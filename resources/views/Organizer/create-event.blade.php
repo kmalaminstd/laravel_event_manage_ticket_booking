@@ -56,6 +56,10 @@
                             <label class="form-label">End Date & Time</label>
                             <input name="end_date" type="datetime-local" class="form-control">
                         </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Ticket Close Date</label>
+                            <input name="ticket_close" type="datetime-local" class="form-control">
+                        </div>
                     </div>
                 </div>
     

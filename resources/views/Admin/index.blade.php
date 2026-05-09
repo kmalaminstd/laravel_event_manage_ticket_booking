@@ -24,7 +24,7 @@
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <div class="stat-label">Total Revenue</div>
-                        <h3>$245,800</h3><span class="stat-change up"><i class="bi bi-arrow-up"></i> 22%</span>
+                        <h3>{{ $totalRevenue }}</h3><span class="stat-change up"><i class="bi bi-arrow-up"></i> 22%</span>
                     </div>
                     <div class="stat-icon primary"><i class="bi bi-currency-dollar"></i></div>
                 </div>
@@ -35,7 +35,7 @@
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <div class="stat-label">Total Users</div>
-                        <h3>12,480</h3><span class="stat-change up"><i class="bi bi-arrow-up"></i> 8%</span>
+                        <h3>{{ $totalUser }}</h3><span class="stat-change up"><i class="bi bi-arrow-up"></i> 8%</span>
                     </div>
                     <div class="stat-icon success"><i class="bi bi-people"></i></div>
                 </div>
@@ -46,7 +46,7 @@
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <div class="stat-label">Total Events</div>
-                        <h3>3,210</h3><span class="stat-change up"><i class="bi bi-arrow-up"></i> 15%</span>
+                        <h3>{{ $totalEvent }}</h3><span class="stat-change up"><i class="bi bi-arrow-up"></i> 15%</span>
                     </div>
                     <div class="stat-icon warning"><i class="bi bi-calendar-event"></i></div>
                 </div>
@@ -57,7 +57,7 @@
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <div class="stat-label">Active Organizers</div>
-                        <h3>856</h3><span class="stat-change up"><i class="bi bi-arrow-up"></i> 12%</span>
+                        <h3>{{ $totalActiveOrganizer }}</h3><span class="stat-change up"><i class="bi bi-arrow-up"></i> 12%</span>
                     </div>
                     <div class="stat-icon info"><i class="bi bi-person-badge"></i></div>
                 </div>
@@ -98,66 +98,59 @@
                         style="font-size:0.85rem;color:var(--primary);">View all</a>
                 </div>
                 <div class="d-flex flex-column gap-3">
-                    <div class="d-flex justify-content-between align-items-center p-2 rounded"
-                        style="background:var(--light-bg);">
-                        <div class="d-flex align-items-center gap-2">
-                            <div class="user-avatar" style="width:35px;height:35px;font-size:0.7rem;">SJ</div>
-                            <div><strong style="font-size:0.85rem;">Sarah Johnson</strong>
-                                <div class="text-muted" style="font-size:0.75rem;">Attendee · 2 hours ago</div>
+
+                    @foreach ($recentUsers as $user)
+                        
+                        <div class="d-flex justify-content-between align-items-center p-2 rounded"
+                            style="background:var(--light-bg);">
+                            <div class="d-flex align-items-center gap-2">
+                                <div><strong style="font-size:0.85rem;">{{ $user->name }}</strong>
+                                    <div class="text-muted" style="font-size:0.75rem;">Joined · {{ $user->created_at->format('d M, Y') }}</div>
+                                </div>
                             </div>
+                            <span class="status-badge active">Active</span>
                         </div>
-                        <span class="status-badge active">Active</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center p-2 rounded"
-                        style="background:var(--light-bg);">
-                        <div class="d-flex align-items-center gap-2">
-                            <div class="user-avatar" style="width:35px;height:35px;font-size:0.7rem;">MC</div>
-                            <div><strong style="font-size:0.85rem;">Mike Chen</strong>
-                                <div class="text-muted" style="font-size:0.75rem;">Organizer · 5 hours ago</div>
-                            </div>
-                        </div>
-                        <span class="status-badge pending">Pending</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center p-2 rounded"
-                        style="background:var(--light-bg);">
-                        <div class="d-flex align-items-center gap-2">
-                            <div class="user-avatar" style="width:35px;height:35px;font-size:0.7rem;">EL</div>
-                            <div><strong style="font-size:0.85rem;">Emily Lee</strong>
-                                <div class="text-muted" style="font-size:0.75rem;">Attendee · 1 day ago</div>
-                            </div>
-                        </div>
-                        <span class="status-badge active">Active</span>
-                    </div>
+
+                    @endforeach
+
                 </div>
             </div>
         </div>
+
         <div class="col-lg-6">
             <div class="dashboard-card">
                 <div class="card-header-custom">
-                    <h5>Pending Approvals</h5><a href="admin-manage-events.html" class="text-decoration-none"
+                    <h5>Pending Approvals</h5><a href="/admin/manage-events" class="text-decoration-none"
                         style="font-size:0.85rem;color:var(--primary);">View all</a>
                 </div>
                 <div class="d-flex flex-column gap-3">
-                    <div class="d-flex justify-content-between align-items-center p-2 rounded"
-                        style="background:var(--light-bg);">
-                        <div><strong style="font-size:0.85rem;">AI & Future of Work Forum</strong>
-                            <div class="text-muted" style="font-size:0.75rem;">by SoundMax Pro · Submitted 2 days ago
+
+                        
+                    
+                        
+                    @forelse ($pendingEvents as $event)
+                        
+                        <div class="d-flex justify-content-between align-items-center p-2 rounded"
+                            style="background:var(--light-bg);">
+                            <div><strong style="font-size:0.85rem;">{{ $event->name }}</strong>
+                                <div class="text-muted" style="font-size:0.75rem;">by {{ $event->user->name }} · Submitted {{ $event->created_at->diffForHumans() }}
+                                </div>
+                            </div>
+                            <div class="d-flex gap-1">
+                                <form method="POST" action="/admin/event/{{ $event->id }}/approve">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" class="action-btn success"><i class="bi bi-check-lg"></i></button>
+                                </form>
                             </div>
                         </div>
-                        <div class="d-flex gap-1"><button class="action-btn success"><i
-                                    class="bi bi-check-lg"></i></button><button class="action-btn danger"><i
-                                    class="bi bi-x-lg"></i></button></div>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center p-2 rounded"
-                        style="background:var(--light-bg);">
-                        <div><strong style="font-size:0.85rem;">Yoga & Wellness Retreat</strong>
-                            <div class="text-muted" style="font-size:0.75rem;">by HealthFirst Inc · Submitted 3 days ago
-                            </div>
-                        </div>
-                        <div class="d-flex gap-1"><button class="action-btn success"><i
-                                    class="bi bi-check-lg"></i></button><button class="action-btn danger"><i
-                                    class="bi bi-x-lg"></i></button></div>
-                    </div>
+
+                        @empty
+
+                        <p class="text-center">There are no pending approvals</p>
+
+                    @endforelse
+                 
                 </div>
             </div>
         </div>

@@ -42,10 +42,13 @@ class HomeController extends Controller
         $isSaveEvent = "";
         if(Auth::user()){
             $user = Auth::user();
-    
+            
             $isSaveEvent = SavePost::where("user_id", $user->id)->where("event_id", $event->id)->first();
         }
 
+        
+
+        // $remainningTicket = 
 
         $schedules = $event->schedule()->get();
         $faqs = $event->faq()->get();

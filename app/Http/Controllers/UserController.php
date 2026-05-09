@@ -14,6 +14,12 @@ class UserController extends Controller
 
     use AuthorizesRequests;
 
+    public function showAll(){
+        $users = User::latest()->paginate(30);
+
+        return view('admin.manage-users', compact('users'));
+    }
+
     public function organizerInfoUpdate(User $user ,Request $request){
 
         $attributes = $request->validate([

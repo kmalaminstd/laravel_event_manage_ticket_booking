@@ -32,6 +32,12 @@ class OrganizerController extends Controller
 
     public function editEvent(Event $event){
         $this->authorize('update', $event);
+        $admin = Auth::user()->role === 'admin';
+        if($event->admin_approved){
+            if(!$admin){
+                abort(403, 'You are not allowed to edit this event');
+            }
+        }
         // $event->with(['schedule', 'ticket', 'faq']);
         $event->load(['schedule']);
         $categories = Category::activeCategory();
