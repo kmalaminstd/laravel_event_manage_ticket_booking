@@ -9,7 +9,7 @@
         <!-- FILTER SIDEBAR -->
         <div class="col-lg-3">
 
-          <x-home.event-filter />
+          <x-home.event-filter :categories="$categories" />
           
         </div>
 
@@ -41,18 +41,10 @@
               </div>
             @endforeach
 
-          <!-- Pagination -->
-          <nav class="mt-4 d-flex justify-content-center">
-            <ul class="pagination pagination-custom">
-              <li class="page-item"><a class="page-link" href="#"><i class="bi bi-chevron-left"></i></a></li>
-              <li class="page-item active"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">...</a></li>
-              <li class="page-item"><a class="page-link" href="#">12</a></li>
-              <li class="page-item"><a class="page-link" href="#"><i class="bi bi-chevron-right"></i></a></li>
-            </ul>
-          </nav>
+            
+            <!-- Pagination -->
+            {{ $events->links('vendor.pagination.numbered-pagination-customized') }}
+          
         </div>
       </div>
     </div>

@@ -31,9 +31,56 @@ class HomeController extends Controller
         return view('pages.home', compact(['categories', 'featuredEvents', 'nextWeekEvents']));
     }
 
-    public function events(){
-        $events = Event::where("admin_approved", true)->where('published', true)->withMin('ticket', 'price')->withMax('ticket', 'price')->with(['category', 'media', 'user'])->paginate(20);
-        return view('pages.events', compact('events'));
+    public function events(Request $request){
+
+        $categories = Category::all(['slug', 'name']);
+
+        $events = Event::where("admin_approved", true)->where('published', true)->withMin('ticket', 'price')->withMax('ticket', 'price');
+
+        // filter category
+        if($request->category){
+            $category = Category::where('slug', $request->category)->first();
+
+            $events->where('category_id', $category->id);
+        }
+
+        // filter range
+        if($request->range){
+
+            $events->whereHas('ticket', function($query) use ($request) {
+                $query->where('price' , '<=', $request->range);
+            });
+        }
+
+        // date filter
+        if($request->date){
+            $events->where('start_date', $request->date);
+        }
+
+        // location filter
+        if($request->city){
+            $events->where('address', 'LIKE', '%' . $request->city . '%')->orWhere('venue', 'LIKE' , '%' . $request->city . '%');
+        }
+
+        // type filter
+        if($request->type){
+            if ($request->type === 'free') {
+
+                $events->whereHas('ticket', function ($q) {
+                    $q->where('price', '<=', 0);
+                });
+
+            } elseif ($request->type === 'paid') {
+
+                $events->whereHas('ticket', function ($q) {
+                    $q->where('price', '>', 0);
+                });
+            }
+        }
+
+        $events = $events->with(['category', 'media', 'user'])->paginate(20);
+
+        return view('pages.events', compact(['events', 'categories']));
     }
 
     public function eventDetails(Event $event){
