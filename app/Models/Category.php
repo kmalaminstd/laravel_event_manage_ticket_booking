@@ -14,7 +14,11 @@ class Category extends Model
     }
 
     public static function activeCategory(){
-        return self::where('status', true)->latest()->get();
+        return self::withCount([
+            'posts as posts_count' => function($query) {
+                $query->where('admin_approved', true)->where('published', true);
+            }
+        ])->where('status', true)->latest()->get();
     }
     
 }

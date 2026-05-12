@@ -7,7 +7,8 @@
 
 <div class="event-card">
     <div class="card-img-wrap">
-        <img src="{{ asset("storage/" . $event->media->src) }}" alt="Event"><span class="badge-price">From ${{ $event->ticket_min_price }} 
+        <img src="{{ asset("storage/" . $event->media->src) }}" alt="Event">
+            <span class="badge-price">{{ $event->ticket_max_price > $event->ticket_min_price ? "From" : "" }} ${{ $event->ticket_min_price }}
 
             @if ($event->ticket_max_price > $event->ticket_min_price)
                 {{ "to - $" . $event->ticket_max_price }}

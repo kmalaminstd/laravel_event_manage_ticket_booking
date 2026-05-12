@@ -54,7 +54,7 @@
                             <i class="{{ $category->icon_class }}"></i>
                             </div>
                             <h5>{{ $category->name }}</h5>
-                            <p>{{ $category->posts->count() }} Events</p>
+                            <p>{{ $category->posts_count }} Events</p>
                         </div>
                     </div>
                 @endforeach
@@ -96,9 +96,12 @@
         <div class="horizontal-scroll-wrapper">
             <div class="horizontal-scroll">
 
-                @foreach ($nextWeekEvents as $event)
+
+                @forelse ($nextWeekEvents as $event)
                     <x-cards.user-event-week-card :event="$event" />
-                @endforeach
+                @empty
+                    <h4>No courses</h4>
+                @endforelse
             
             </div>
         </div>

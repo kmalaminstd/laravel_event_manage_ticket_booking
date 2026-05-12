@@ -23,16 +23,16 @@ class HomeController extends Controller
 
         $categories = Category::activeCategory();
 
-        $featuredEvents = Event::where("admin_approved", true)->where("published", true)->where("featured", true)->withMin('ticket', 'price')->withMax('ticket', 'price')->latest()->take(6)->get();
+        $featuredEvents = Event::where("admin_approved", true)->with(['user', 'category', 'media'])->where("published", true)->where("featured", true)->withMin('ticket', 'price')->withMax('ticket', 'price')->latest()->take(6)->get();
 
-        $nextWeekEvents = Event::where("admin_approved", true)->where("published", true)->whereBetween('start_date' ,[$nextWeekStart, $nextWeekEnd])->withMin('ticket', 'price')->orderBy('start_date')->get();
+        $nextWeekEvents = Event::where("admin_approved", true)->with(['user', 'category', 'media'])->where("published", true)->whereBetween('start_date' ,[$nextWeekStart, $nextWeekEnd])->withMin('ticket', 'price')->orderBy('start_date')->get();
         
 
         return view('pages.home', compact(['categories', 'featuredEvents', 'nextWeekEvents']));
     }
 
     public function events(){
-        $events = Event::where("admin_approved", true)->with(['category', 'media'])->paginate(20);
+        $events = Event::where("admin_approved", true)->where('published', true)->withMin('ticket', 'price')->withMax('ticket', 'price')->with(['category', 'media', 'user'])->paginate(20);
         return view('pages.events', compact('events'));
     }
 
