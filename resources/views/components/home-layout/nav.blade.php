@@ -7,8 +7,8 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarMain">
         <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="/events">Browse Events</a></li>
+          <li class="nav-item"><a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link {{ request()->is('events') ? 'active' : '' }}" href="/events">Browse Events</a></li>
         </ul>
         <div class="d-flex align-items-center gap-2">
           <button class="search-toggler"><i class="bi bi-search"></i></button>

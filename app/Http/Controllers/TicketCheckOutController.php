@@ -14,6 +14,10 @@ class TicketCheckOutController extends Controller
 
     public function checkout(Event $event, Request $request){
 
+        if($event->ticket_close <= now()->toDateString()){
+            abort(403, "Event ticket closed!");
+        }
+
         $requestedTicketIds = $request->input('ticket', []);
 
         // filter the tickes which only are request for

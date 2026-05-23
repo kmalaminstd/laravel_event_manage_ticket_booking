@@ -36,6 +36,5 @@ class AppServiceProvider extends ServiceProvider
             return $user->role === 'admin';
         });
 
-
     }
 }

@@ -78,7 +78,10 @@ class HomeController extends Controller
             }
         }
 
-        $events = $events->with(['category', 'media', 'user'])->paginate(20);
+        $events = $events->with(['category', 'media', 'user'])->whereDate('start_date', ">=", now()->toDateString())->paginate(20);
+
+        // dd(now()->toDateString());
+
 
         return view('pages.events', compact(['events', 'categories']));
     }

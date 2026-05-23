@@ -27,6 +27,10 @@
         <div class="organizer">
             <div style="width:28px;height:28px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.7rem;font-weight:700;">
                 SM</div><span>{{ $event->user->name }}</span>
-        </div><a href="/event/{{$event->id}}/{{ $event->slug }}" class="btn btn-sm btn-outline-primary-custom">View</a>
+        </div>
+        @if ($event->ticket_close > now()->toDateString())
+            <a href="/event/{{$event->id}}/{{ $event->slug }}" class="btn btn-sm btn-outline-primary-custom">View</a>
+        @endif
+        
     </div>
 </div>
