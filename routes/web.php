@@ -16,6 +16,7 @@ use Laravel\Cashier\Http\Controllers\WebhookController;
 Route::get("/", [HomeController::class, "index"]);
 Route::get("/events", [HomeController::class, "events"]);
 Route::get("/event/{event}/{slug}", [HomeController::class, "eventDetails"]);
+Route::get('/search', [HomeController::class, "search"]);
 
 
 Route::get("/forgot-password", function () {

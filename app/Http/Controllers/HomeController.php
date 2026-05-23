@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Event;
 use App\Models\SavePost;
 use Carbon\Carbon;
+use GuzzleHttp\Psr7\Query;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -23,9 +24,11 @@ class HomeController extends Controller
 
         $categories = Category::activeCategory();
 
-        $featuredEvents = Event::where("admin_approved", true)->with(['user', 'category', 'media'])->where("published", true)->where("featured", true)->withMin('ticket', 'price')->withMax('ticket', 'price')->latest()->take(6)->get();
+        $commontEvents = Event::where("admin_approved", true)->with(['user', 'category', 'media'])->where("published", true);
 
-        $nextWeekEvents = Event::where("admin_approved", true)->with(['user', 'category', 'media'])->where("published", true)->whereBetween('start_date' ,[$nextWeekStart, $nextWeekEnd])->withMin('ticket', 'price')->orderBy('start_date')->get();
+        $featuredEvents = $commontEvents->where("featured", true)->withMin('ticket', 'price')->withMax('ticket', 'price')->latest()->take(6)->get();
+
+        $nextWeekEvents = $commontEvents->whereBetween('start_date' ,[$nextWeekStart, $nextWeekEnd])->withMin('ticket', 'price')->orderBy('start_date')->get();
         
 
         return view('pages.home', compact(['categories', 'featuredEvents', 'nextWeekEvents']));
@@ -104,6 +107,32 @@ class HomeController extends Controller
         $faqs = $event->faq()->get();
         $tickets = $event->ticket()->get();
         return view('pages.event-details', compact('event', 'schedules', 'faqs', 'tickets', 'isSaveEvent'));
+    }
+
+    public function search(Request $request){
+        $q = $request->q;
+        $location = $request->location;
+        $date = $request->date;
+
+        $events = Event::with(['user', 'category', 'media'])->where('admin_approved', true)->where('published', true)->where('start_date', '>=', now()->toDateString());
+
+        if($q){
+            $events->where(function ($query) use ($q) {
+                $query->where('name', 'LIKE', "%{$q}%");
+            });
+        }
+        if($location){
+            $events->Where('address', 'LIKE', "%{$location}%")->orWhere('venue', 'LIKE', "%{$location}%");
+        }
+        if($date){
+            $events->where('start_date', $date);
+        }
+        $events = $events->paginate(30);
+
+        // dd($events);
+
+        return view('pages.search', compact('events'));
+
     }
 
 }

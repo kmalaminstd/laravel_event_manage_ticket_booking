@@ -10,11 +10,13 @@
             <span class="section-badge">🎉 #1 Event Platform</span>
             <h1>Discover <span>Events</span><br>Near You</h1>
             <p>Find and book tickets for concerts, workshops, seminars, conferences and more — all in one place.</p>
-            <div class="hero-search">
-                <input type="text" placeholder="Search events...">
-                <input type="text" placeholder="Location">
-                <input type="date" class="d-none d-md-block">
-                <button class="btn-search">Explore Now</button>
+            <div>
+                <form action="/search" class="hero-search">
+                    <input type="text" name="q" placeholder="Search events...">
+                    <input type="text" name="location" placeholder="Location">
+                    <input type="date" name="date" class="d-none d-md-block">
+                    <button type="submit" class="btn-search">Explore Now</button>
+                </form>
             </div>
             <div class="hero-stats">
                 <div class="stat-item">

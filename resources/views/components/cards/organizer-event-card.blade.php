@@ -17,7 +17,7 @@
                 <span class="status-badge draft event-status">Pending</span>
             @endif
         </div>
-        <h5>Summer Music Festival 2026</h5>
+        <h5>{{ $event->name }}</h5>
         <div class="event-stats">
             <span><i class="bi bi-ticket-perforated"></i> 320 sold</span>
             <span><i class="bi bi-currency-dollar"></i> $15,680</span>
