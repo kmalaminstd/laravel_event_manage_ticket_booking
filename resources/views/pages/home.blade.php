@@ -90,7 +90,7 @@
         <div class="container">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <div>
-            <span class="section-badge">This Week</span>
+            <span class="section-badge">Next Week</span>
             <h2 class="mb-0" style="font-size:1.75rem;">Upcoming This Week</h2>
             </div>
             <a href="browse-events.html" class="btn btn-outline-primary-custom d-none d-md-inline-flex">View All <i class="bi bi-arrow-right ms-1"></i></a>
@@ -102,7 +102,7 @@
                 @forelse ($nextWeekEvents as $event)
                     <x-cards.user-event-week-card :event="$event" />
                 @empty
-                    <h4>No courses</h4>
+                    <h4 class="text-center w-100">No Events</h4>
                 @endforelse
             
             </div>

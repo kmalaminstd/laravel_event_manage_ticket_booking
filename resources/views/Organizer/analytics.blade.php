@@ -7,7 +7,7 @@
         <button class="sidebar-toggle"><i class="bi bi-list"></i></button>
         <div class="topbar-title">
             <h5>Analytics</h5>
-            <p>Deep dive into your performance</p>
+            <p>{{ $event->name }}</p>
         </div>
     </div>
     <div class="topbar-right">
@@ -28,7 +28,7 @@
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <div class="stat-label">Total Revenue</div>
-                        <h3>$24,580</h3><span class="stat-change up"><i class="bi bi-arrow-up"></i> 18%</span>
+                        <h3>${{ $totalRevenue }}</h3><span class="stat-change up"><i class="bi bi-arrow-up"></i> 18%</span>
                     </div>
                     <div class="stat-icon primary"><i class="bi bi-currency-dollar"></i></div>
                 </div>
@@ -39,7 +39,7 @@
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <div class="stat-label">Tickets Sold</div>
-                        <h3>1,842</h3><span class="stat-change up"><i class="bi bi-arrow-up"></i> 24%</span>
+                        <h3>{{ $totalTicketSold }}</h3><span class="stat-change up"><i class="bi bi-arrow-up"></i> 24%</span>
                     </div>
                     <div class="stat-icon success"><i class="bi bi-ticket-perforated"></i></div>
                 </div>

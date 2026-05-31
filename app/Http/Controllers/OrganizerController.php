@@ -79,7 +79,26 @@ class OrganizerController extends Controller
 
     }
 
+    public function analytics(User $user, Event $event){
 
+        // dd($user->role);
+
+        if($user->role === "user"){
+            return abort(403);
+        }
+
+        $loggedInUser = Auth::user();
+
+        if($loggedInUser->id !== $user->id){
+            return abort(403);
+        }
+
+        $totalRevenue = $event->order()->sum('amount');
+        $totalTicketSold = $event->order()->sum('quantity');
+
+
+        return view('organizer.analytics', compact(['event', 'totalRevenue', 'totalTicketSold']));
+    }
 
 
 }

@@ -54,8 +54,8 @@
                     <div class="col-sm-6 col-md-3">
                         <div class="dashboard-card text-center p-3">
                             <i class="bi bi-clock d-block mb-1" style="font-size:1.3rem;color:var(--primary);"></i>
-                            <strong style="font-size:0.85rem;">{{ $event->schedule->first()->time->format('h:i A') }}</strong>
-                            <div style="font-size:0.75rem;color:var(--text-secondary);">Duration: 5 hrs</div>
+                            <strong style="font-size:0.85rem;">{{ $event?->schedule?->first()?->time->format('h:i A') }}</strong>
+                            {{-- <div style="font-size:0.75rem;color:var(--text-secondary);">Duration: 5 hrs</div> --}}
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3">

@@ -39,7 +39,7 @@
 
             @if ($event->published && $event->admin_approved)
 
-                <a href="organizer-analytics.html" class="btn btn-sm btn-outline-primary-custom flex-fill"><i class="bi bi-bar-chart me-1"></i> Analytics </a>
+                <a href="/organizer/analytics/{{ $event->user->id }}/{{ $event->id }}" class="btn btn-sm btn-outline-primary-custom flex-fill"><i class="bi bi-bar-chart me-1"></i> Analytics </a>
 
                 <a href="/organizer/attendees" class="btn btn-sm btn-primary-custom flex-fill"><i  class="bi bi-people me-1"></i> Attendees</a>
             @endif

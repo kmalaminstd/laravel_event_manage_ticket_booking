@@ -93,9 +93,7 @@ Route::middleware(["auth", "role:admin,organizer"])
             return view("organizer.index");
         });
 
-        Route::get("/analytics", function () {
-            return view("organizer.analytics");
-        });
+
 
         Route::get("/attendees", function () {
             return view("organizer.attendees");
@@ -119,6 +117,7 @@ Route::middleware(["auth", "role:admin,organizer"])
             Route::get("/my-events", "myEvents");
             Route::patch('/org-info/{user}/update', 'updateOrganizationInfo');
             Route::get('/settings', 'settings');
+            Route::get('/analytics/{user}/{event}', 'analytics');
         });
 
         Route::controller(EventController::class)->group(function () {
