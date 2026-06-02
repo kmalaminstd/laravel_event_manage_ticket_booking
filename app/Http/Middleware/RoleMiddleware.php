@@ -21,17 +21,13 @@ class RoleMiddleware
             return redirect('/auth/login');
         }
 
-        $user = Auth::user();
-
-        if (!$user || empty($user->role)) {
-            abort(403);
+        foreach($roles as $role){
+            if($request->user()->role === $role){
+                return $next($request);
+            }
         }
 
-        if (!in_array($user->role, $roles)) {
-            abort(403);
-        }
-
-        return $next($request);
+        abort(403);
 
     }
 }
