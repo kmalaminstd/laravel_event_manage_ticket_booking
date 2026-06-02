@@ -69,7 +69,7 @@ class AuthController extends Controller
 
         $remember = $request->remember === 'on' ? true : false;
 
-        if(! Auth::attempt($attributes)){
+        if(! Auth::attempt($attributes, $remember)){
             throw ValidationException::withMessages([
                 "email" => "Credentials does not matches"
             ]);

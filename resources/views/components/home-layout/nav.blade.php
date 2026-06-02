@@ -20,7 +20,9 @@
 
           @can('admin')
             <a href="/admin" class="btn btn-login">Dashbaord</a>
-            <a href="/logout" class="btn btn-login">Log Out</a>
+            <form action="/logout">
+              <button class="btn btn-login">Log Out</button>
+            </form>
           @endcan
 
           @can('user')
