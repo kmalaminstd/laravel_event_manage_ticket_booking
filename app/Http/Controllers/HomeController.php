@@ -90,7 +90,23 @@ class HomeController extends Controller
     }
 
     public function eventDetails(Event $event){
-        $this->authorize('view', $event);
+        
+        // if($event->)
+        // dd($event);
+
+        $auth = Auth::user();
+        // dd($auth);
+        if(!$event->admin_approved){
+            if(!$auth){
+                abort(403);
+            }
+
+            if($auth && $auth->role === 'user')
+
+            if($event->user->id !== $auth->id){
+                abort(403);
+            }
+        }
 
         $isSaveEvent = "";
         if(Auth::user()){
