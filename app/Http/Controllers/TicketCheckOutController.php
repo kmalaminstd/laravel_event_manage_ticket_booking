@@ -15,7 +15,7 @@ class TicketCheckOutController extends Controller
     public function checkout(Event $event, Request $request){
 
         if($event->ticket_close <= now()->toDateString()){
-            // dd($event->ticket_close <= now()->toDateString());
+            dd($event->ticket_close <= now()->toDateString());
             abort(403, "Event ticket closed!");
         }
 
@@ -37,7 +37,7 @@ class TicketCheckOutController extends Controller
             $ticketId = $item['id'];
             $quantity = $item['quantity'];
 
-            // dd($eventTickets);
+            dd($eventTickets);
             if(!isset($eventTickets[$ticketId])){
                 abort(403);
             }

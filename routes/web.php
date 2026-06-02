@@ -163,9 +163,11 @@ Route::middleware(["auth", "role:admin,user"])
             Route::get('/checkout/confirm', 'checkOutSuccess')->name('checkout-success');            
         });
 
-        Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleCheckoutSessionCompleted']);
+        
 
 
 });
+
+Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleCheckoutSessionCompleted']);
 
 @include "auth.php";
