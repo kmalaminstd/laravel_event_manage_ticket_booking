@@ -194,13 +194,13 @@
                 <!-- SHARE & SAVE -->
                 <div class="dashboard-card mt-3 text-center">
                     <div class="d-flex gap-2 justify-content-center">
-                        <x-Forms.form method="POST" action="/user/{{ $event->id }}/save-event">
+                        <x-forms.form method="POST" action="/user/{{ $event->id }}/save-event">
                             @if ($isSaveEvent)
                                 <button type="submit" class="btn btn-sm btn-outline-primary-custom text-white" style="background-color: var(--primary)"><i class="bi bi-heart me-1"></i> Saved</button>
                             @else
                                 <button type="submit" class="btn btn-sm btn-outline-primary-custom"><i class="bi bi-heart me-1"></i> Save</button>
                             @endif
-                        </x-Forms.form>
+                        </x-forms.form>
                             <button class="btn btn-sm btn-outline-primary-custom dropdown-toggle" type="button"  data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-share me-1"></i> Share
                         </button>
