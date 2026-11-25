@@ -23,7 +23,7 @@
                     <li><a href="/admin/orders" class="{{ request()->is('admin/orders') ? 'active' : "" }}"><i class="bi bi-receipt"></i> All Orders</a></li>
                     <li><a href="/admin/reports" class="{{ request()->is('admin/reports') ? 'active' : "" }}"><i class="bi bi-file-bar-graph"></i> Reports</a></li>
 
-                    <li><a href="/admin/global-refunds" class="{{ request()->is('admin/global-refunds') ? 'active' : "" }}"><i class="bi bi-arrow-counterclockwise"></i> Global Refunds</a></li>
+                    <li><a href="/admin/refunds" class="{{ request()->is('admin/refunds') ? 'active' : "" }}"><i class="bi bi-arrow-counterclockwise"></i> Global Refunds</a></li>
 
                     <li><a href="/admin/categories" class="{{ request()->is('admin/categories') ? 'active' : "" }}"><i class="bi bi-tag"></i> Categories</a></li>
 

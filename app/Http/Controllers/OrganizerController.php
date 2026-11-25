@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Event;
 use App\Models\Media;
-use App\Models\User;
+use App\Models\Order;
+use App\Models\Ticket;
 use App\Services\ImageUploadService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +17,50 @@ class OrganizerController extends Controller
 {
     
     use AuthorizesRequests;
+
+    public function index(){
+
+        $user = Auth::user();
+
+        $order = Order::all();
+
+        $orders = Order::whereHas('event', function ($query) use ($user){
+            $query->where('user_id', $user->id);
+        });
+
+        $events = Event::whereHas('user', function ($query) use ($user){
+            $query->where('user_id', $user->id);
+        })->get('id');
+
+        $totalEvents = $events->count();
+
+        $totalRevenue = $orders->sum('amount');
+        $totalTickets = $orders->sum('quantity');
+
+        // monthly revenue
+        $raw = $orders->whereYear('created_at', Carbon::now()->year)->selectRaw("MONTH(created_at) as month, SUM(amount) as revenue")->groupBy('month')->orderBy('month')->pluck('revenue', 'month');
+
+        $labels = [];
+        $data = [];
+
+        for($i = 1; $i <= now()->month; $i++ ){
+            $labels[] = Carbon::create()->month($i)->format('M');
+            $data[] = $raw[$i] ?? 0;
+        }
+
+        $monthlyRevenue = [
+            "labels" => $labels,
+            "data" => $data
+        ];
+
+        $recentOrders = Order::whereHas('event', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->with(['ticket', 'event', 'user'])->latest()->take(3)->get();
+
+        // dd($recentTickets);
+
+        return view("organizer.index", compact(['totalRevenue', 'totalTickets', 'totalEvents', 'monthlyRevenue', 'recentOrders']));
+    }
 
     public function createEvent(){
 

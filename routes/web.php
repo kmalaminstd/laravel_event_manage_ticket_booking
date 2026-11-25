@@ -50,6 +50,8 @@ Route::middleware(["auth", "role:admin"])
             return view("admin.refunds");
         });
 
+
+
         Route::get("/manage-events", [AdminController::class ,"manageEvents"]);
 
         Route::controller(UserController::class)->group(function(){
@@ -89,10 +91,6 @@ Route::middleware(["auth", "role:admin"])
 Route::middleware(["auth", "role:admin,organizer"])
     ->prefix("organizer")
     ->group(function () {
-        Route::get("/", function () {
-            return view("organizer.index");
-        });
-
 
 
         Route::get("/attendees", function () {
@@ -111,12 +109,17 @@ Route::middleware(["auth", "role:admin,organizer"])
             return view("organizer.refunds");
         });
 
+        
+
         Route::controller(OrganizerController::class)->group(function () {
+            Route::get("/", "index");
+            // Route::get("/total-analytics", "allAnalytics");
             Route::get("/create-event", "createEvent");
             Route::get("/event/{event}/edit", "editEvent");
             Route::get("/my-events", "myEvents");
             Route::patch('/org-info/{user}/update', 'updateOrganizationInfo');
             Route::get('/settings', 'settings');
+            
             Route::get('/analytics/{user}/{event}', 'analytics');
         });
 

@@ -12,8 +12,9 @@
     </div>
     <div class="topbar-right">
         <button class="topbar-icon"><i class="bi bi-bell"></i><span class="badge-dot"></span></button>
-        <a href="organizer-create-event.html" class="btn btn-sm btn-primary-custom d-none d-md-inline-flex"><i
-                class="bi bi-plus me-1"></i> New Event</a>
+        <a href="/organizer/create-event" class="btn btn-sm btn-primary-custom d-none d-md-inline-flex"><i
+                class="bi bi-plus me-1"></i>
+                 New Event</a>
     </div>
 </div>
 
@@ -25,7 +26,7 @@
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <div class="stat-label">Total Revenue</div>
-                        <h3>$24,580</h3><span class="stat-change up"><i class="bi bi-arrow-up"></i> 18% this
+                        <h3>$ {{ $totalRevenue }}</h3><span class="stat-change up"><i class="bi bi-arrow-up"></i> 18% this
                             month</span>
                     </div>
                     <div class="stat-icon primary"><i class="bi bi-currency-dollar"></i></div>
@@ -37,7 +38,7 @@
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <div class="stat-label">Tickets Sold</div>
-                        <h3>1,842</h3><span class="stat-change up"><i class="bi bi-arrow-up"></i> 24% this month</span>
+                        <h3>{{ $totalTickets }}</h3><span class="stat-change up"><i class="bi bi-arrow-up"></i> 24% this month</span>
                     </div>
                     <div class="stat-icon success"><i class="bi bi-ticket-perforated"></i></div>
                 </div>
@@ -48,7 +49,7 @@
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <div class="stat-label">Active Events</div>
-                        <h3>8</h3><span class="stat-change up"><i class="bi bi-arrow-up"></i> 2 new</span>
+                        <h3>{{ $totalEvents }}</h3><span class="stat-change up"><i class="bi bi-arrow-up"></i> 2 new</span>
                     </div>
                     <div class="stat-icon warning"><i class="bi bi-calendar-event"></i></div>
                 </div>
@@ -69,7 +70,7 @@
 
     <!-- CHARTS -->
     <div class="row g-4">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             <div class="dashboard-card">
                 <div class="card-header-custom">
                     <h5>Revenue Overview</h5>
@@ -78,15 +79,7 @@
                         <option>Last 6 Months</option>
                     </select>
                 </div>
-                <div style="height:300px;"><canvas id="lineChart" data-label="Revenue"></canvas></div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="dashboard-card">
-                <div class="card-header-custom">
-                    <h5>Ticket Distribution</h5>
-                </div>
-                <div style="height:300px;"><canvas id="pieChart"></canvas></div>
+                <div style="height:300px;"><canvas id="orgRevenue" data-label="Revenue"></canvas></div>
             </div>
         </div>
     </div>
@@ -95,8 +88,7 @@
     <div class="dashboard-card mt-4">
         <div class="card-header-custom">
             <h5>Recent Orders</h5>
-            <a href="organizer-orders.html" class="text-decoration-none"
-                style="font-size:0.85rem;color:var(--primary);">View all</a>
+            <a href="organizer-orders.html" class="text-decoration-none" style="font-size:0.85rem;color:var(--primary);">View all</a>
         </div>
         <div class="table-responsive">
             <table class="data-table">
@@ -110,38 +102,69 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><strong>#ORD-4821</strong></td>
-                        <td>Sarah Johnson</td>
-                        <td>Summer Music Festival</td>
-                        <td>$49.00</td>
-                        <td><span class="status-badge completed">Paid</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>#ORD-4820</strong></td>
-                        <td>Mike Chen</td>
-                        <td>Tech Innovation Summit</td>
-                        <td>$258.00</td>
-                        <td><span class="status-badge completed">Paid</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>#ORD-4819</strong></td>
-                        <td>Emily Lee</td>
-                        <td>Design Masterclass</td>
-                        <td>$35.00</td>
-                        <td><span class="status-badge pending">Pending</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>#ORD-4818</strong></td>
-                        <td>James Wilson</td>
-                        <td>Summer Music Festival</td>
-                        <td>$199.00</td>
-                        <td><span class="status-badge completed">Paid</span></td>
-                    </tr>
+
+                    @foreach ($recentOrders as $order)
+                    {{-- {{ dd($order) }}                        --}}
+                        <tr>
+                            <td><strong>{{ $order->order_code }}</strong></td>
+                            <td>{{ $order->user->name }}</td>
+                            <td>{{ $order->event->name }}</td>
+                            <td>${{ $order->amount }}</td>
+                            <td><span class="status-badge completed">{{ $order->status }}</span></td>
+                        </tr>
+                    @endforeach
+
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+@push("js")
+    <script>
+        // --- Initialize Charts (if Chart.js is loaded) ---
+        if (typeof Chart !== 'undefined') {
+            Chart.defaults.font.family = "'Inter', sans-serif";
+            Chart.defaults.color = '#6c757d';
+
+            // --- Revenue Overview Chart (Admin) ---
+            const revenueCtx = document.getElementById('orgRevenue');
+            if (revenueCtx) {
+            new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                labels: @json($monthlyRevenue['labels']),
+                datasets: [
+                    {
+                    label: 'Revenue',
+                    data: @json($monthlyRevenue['data']),
+                    borderColor: '#265367',
+                    backgroundColor: 'rgba(38,83,103,0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 2.5
+                    },
+                ]
+                },
+                options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { padding: 15, usePointStyle: true } }
+                },
+                scales: {
+                    y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(0,0,0,0.05)' },
+                    // ticks: { callback: v => '$' + (v / 1000) + 'k' }
+                    },
+                    x: { grid: { display: true } }
+                }
+                }
+            });
+            }
+        }
+    </script>
+@endpush
 
 @endsection
