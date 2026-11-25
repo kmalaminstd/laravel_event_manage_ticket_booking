@@ -163,10 +163,10 @@ Route::middleware(["auth", "role:admin,user"])
         Route::controller(TicketCheckOutController::class)->group(function(){
             Route::post('/checkout/{event}', 'checkout');
             Route::get('/checkout/failed', 'checkOutFailed')->name('checkout-cancel');
-            Route::get('/checkout/confirm', 'checkOutSuccess')->name('checkout-success');            
+            Route::get('/checkout/confirm', 'checkOutSuccess')->name('checkout-success');
         });
 
-        Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleCheckoutSessionCompleted']);
+        // Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleCheckoutSessionCompleted']);
 
 
 });

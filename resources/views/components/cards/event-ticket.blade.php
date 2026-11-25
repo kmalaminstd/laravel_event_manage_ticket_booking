@@ -120,7 +120,7 @@
                     </div>
 
                     <div class="info-label">Time</div>
-                    <div class="info-value">{{ $order->event->schedule->first()->time }}</div>
+                    <div class="info-value">{{ $order->event->schedule->first()?->time }}</div>
 
                     <div class="info-label">Venue</div>
                     <div class="info-value">{{ $order->event->venue }}</div>

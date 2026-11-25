@@ -68,7 +68,7 @@ class TicketCheckOutController extends Controller
         Stripe::setApiKey(config('services.stripe.api_secret'));
 
         $session = Session::create([
-            'payment_method_types' => ['card'],
+            'payment_method_types' => ['card', 'bancontact', 'eps', 'ideal', 'p24', 'sepa_debit'],
             'line_items' => $lineItems,
             'mode' => 'payment',
             'metadata' => [
