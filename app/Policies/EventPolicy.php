@@ -91,4 +91,11 @@ class EventPolicy
     public function suspend(User $user){
         return $user->isAdmin();
     }
+
+    public function viewAttendees(User $user, Event $event){
+        if($event->user->id === $user->id && ( $user->role === "organizer" || $event->role === "admin" )){
+            return true;
+        }
+        return false;
+    }
 }

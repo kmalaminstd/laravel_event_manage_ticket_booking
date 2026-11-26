@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Models\Media;
 use App\Models\Order;
 use App\Models\Ticket;
+use App\Models\User;
 use App\Services\ImageUploadService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -125,9 +126,9 @@ class OrganizerController extends Controller
 
     }
 
-    public function analytics(User $user, Event $event){
+    public function analytics(Event $event){
 
-        // dd($user->role);
+        $user = Auth::user();
 
         if($user->role === "user"){
             return abort(403);

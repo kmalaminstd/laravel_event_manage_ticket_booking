@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AttendeesController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
@@ -92,11 +93,6 @@ Route::middleware(["auth", "role:admin,organizer"])
     ->prefix("organizer")
     ->group(function () {
 
-
-        Route::get("/attendees", function () {
-            return view("organizer.attendees");
-        });
-
         Route::get("/orders", function () {
             return view("organizer.orders");
         });
@@ -109,6 +105,9 @@ Route::middleware(["auth", "role:admin,organizer"])
             return view("organizer.refunds");
         });
 
+        Route::controller(AttendeesController::class)->group(function(){
+            Route::get('/attendees/{event}', 'organizerAttendees');
+        });
         
 
         Route::controller(OrganizerController::class)->group(function () {
@@ -120,7 +119,7 @@ Route::middleware(["auth", "role:admin,organizer"])
             Route::patch('/org-info/{user}/update', 'updateOrganizationInfo');
             Route::get('/settings', 'settings');
             
-            Route::get('/analytics/{user}/{event}', 'analytics');
+            Route::get('/analytics/{event}', 'analytics');
         });
 
         Route::controller(EventController::class)->group(function () {

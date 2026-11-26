@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use App\Policies\EventPolicy;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
+#[UsePolicy(EventPolicy::class)]
 class Event extends Model
 {
     
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     public function category(){
         return $this->belongsTo(Category::class);
